@@ -5,7 +5,7 @@ package dech.board.post.model;
 //import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Post {
-
+//abc
 	private String postId;
 	private String username;
 	private String title;
