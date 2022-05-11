@@ -14,7 +14,7 @@ public class PostServiceImpl implements MessageService{
 	@Autowired
 	PostRepository messageRepo = new PostRepository();
 	
-	
+	//method to ad a post
 	public void addPost(Post post) {
 		
 		messageRepo.messageList.add(post);

@@ -5,7 +5,7 @@ package dech.board.post.model;
 //import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Post {
-//abc
+//Attributes for a post on the dashboard
 	private String postId;
 	private String username;
 	private String title;
@@ -14,7 +14,7 @@ public class Post {
 	private int downVotes;
 	private Boolean important;
 	
-	
+	//The Attributes upVotes and downVotes dont belong in the Constructer
 	public Post(String username, String title, String content,
 			Boolean important) {
 		

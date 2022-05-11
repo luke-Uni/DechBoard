@@ -1,10 +1,11 @@
 package dech.board.user;
 
 public class User {
+	//this is the login with the User data
 	private String username;
 	private String password;
 	private String email;
-	//hj
+	
 	public User(String username, String password, String email) {
 		
 		this.username = username;

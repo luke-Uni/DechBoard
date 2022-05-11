@@ -6,14 +6,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-
+	// this is the arrayList, it stores the data of Users. Later on it is going to be replaced by a database
 	ArrayList<User> addUser = new ArrayList<>();
 
 	public void addUser(User user) {
 		addUser.add(user);
 	}
 
-	// Find me
+	
 	public int findUser(String username) {
 		for (int i = 0; i < addUser.size(); i++) {
 			if (addUser.get(i).getUsername().toLowerCase().equals(username.toLowerCase())) {
@@ -26,7 +26,7 @@ public class UserService {
 		return 0;
 	}
 
-	// Yes
+	
 	public ArrayList<User> getAddUser() {
 		return addUser;
 	}
