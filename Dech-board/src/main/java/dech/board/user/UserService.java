@@ -11,6 +11,8 @@ ArrayList<User> addUser = new ArrayList<>();
 public void addUser (User user) {
 	addUser.add(user);
 }
+
+//Find me
 public int findUser(String username) {
 	for (int i = 0; i < addUser.size(); i++) {
 		if (addUser.get(i).getUsername().toLowerCase().equals(username.toLowerCase())) {
