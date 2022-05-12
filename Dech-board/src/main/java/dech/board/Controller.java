@@ -21,6 +21,7 @@ import dech.board.post.service.PostServiceImpl;
 public class Controller {
 
 //abc
+//abc
     @Autowired
     PostServiceImpl postService = new PostServiceImpl();
 
