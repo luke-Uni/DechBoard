@@ -28,7 +28,7 @@ public class Controller {
 >>>>>>> 10ca0716df5f701517e697210fcd9165191834d8
     @Autowired
     PostServiceImpl postService = new PostServiceImpl();
-
+//abcd
 
 
     //Mapping to create a new post
