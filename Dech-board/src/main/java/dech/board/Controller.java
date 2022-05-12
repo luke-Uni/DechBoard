@@ -25,7 +25,7 @@ public class Controller {
     @Autowired
     PostServiceImpl postService = new PostServiceImpl();
 //abcd
-
+//abcd
 
     //Mapping to create a new post
     @RequestMapping(value = "/posts/create", method= RequestMethod.POST,  consumes = MediaType.APPLICATION_JSON_VALUE)
