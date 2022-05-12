@@ -20,9 +20,10 @@ import dech.board.post.service.PostServiceImpl;
 @RestController
 public class Controller {
 
+
 //abc
 //abc
->>>>>>> 10ca0716df5f701517e697210fcd9165191834d8
+//koomentar
     @Autowired
     PostServiceImpl postService = new PostServiceImpl();
 
