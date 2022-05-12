@@ -20,14 +20,12 @@ import dech.board.post.service.PostServiceImpl;
 @RestController
 public class Controller {
 
-
 //abc
 //abc
-//koomentar
     @Autowired
     PostServiceImpl postService = new PostServiceImpl();
-
-
+//abcd
+//absdsa
 
     //Mapping to create a new post
     @RequestMapping(value = "/posts/create", method= RequestMethod.POST,  consumes = MediaType.APPLICATION_JSON_VALUE)
