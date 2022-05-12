@@ -21,6 +21,7 @@ import dech.board.post.service.PostServiceImpl;
 public class Controller {
 
 //abc
+
     @Autowired
     PostServiceImpl postService = new PostServiceImpl();
 
@@ -34,7 +35,7 @@ public class Controller {
         System.out.println(post);
 
         return ResponseEntity.status(HttpStatus.OK).body("Post successfully created"+post);
-
+        //aa
     }
 
     //Mapping to create a new post
