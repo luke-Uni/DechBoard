@@ -21,9 +21,6 @@ import dech.board.post.service.PostServiceImpl;
 public class Controller {
 
 //abc
-<<<<<<< HEAD
-
-=======
 //abc
 >>>>>>> 10ca0716df5f701517e697210fcd9165191834d8
     @Autowired
