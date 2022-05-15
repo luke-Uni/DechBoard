@@ -1,0 +1,15 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-DechBoardApplication<Dech-board>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "mainClass": "dech.board.DechBoardApplication",
+      "projectName": "Dech-board",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
