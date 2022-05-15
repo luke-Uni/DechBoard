@@ -11,12 +11,12 @@ import dech.board.comment.repository.CommentRepository;
 @Service
 public class CommentService {
     @Autowired
-	CommentRepository cmt= new CommentRepository();
+	CommentRepository allComments= new CommentRepository();
 	
 	//method to ad a post
 	public void addComment(Comment comment) {
 		
-		cmt.getComments().add(comment);
+		allComments.getComments().add(comment);
 		
 		
 		
@@ -24,6 +24,6 @@ public class CommentService {
 	public ArrayList<Comment> getComments() {
 		
 		
-		return cmt.getComments();
+		return allComments.getComments();
 	}
 }
