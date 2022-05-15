@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dech.board.post.model.Post;
 import dech.board.post.service.PostServiceImpl;
+import dech.board.user.model.User;
+import dech.board.user.service.UserService;
 
 @CrossOrigin
 @RestController
@@ -24,6 +26,8 @@ public class Controller {
 //abc
     @Autowired
     PostServiceImpl postService = new PostServiceImpl();
+    @Autowired
+	UserService uS;
 //abcd
 //absdsa
 //abcd
@@ -51,4 +55,23 @@ public class Controller {
         }
 
 
+        //Mapping to create a User(i dont know if it is really necessary)
+        @RequestMapping(value = "/user", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+        public ResponseEntity<?> addUser(@RequestBody User user) {
+            
+            
+            if (uS.findUser(user.getUsername()) == 0) {
+                // user should not be already existing
+                uS.addUser(user);
+                System.out.println(user.getUsername() + " successfull registert");
+                
+    
+                return ResponseEntity.status(HttpStatus.OK).body(user);
+            }
+    
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("user is already existing");
+            
+        
+            
+        }
 }
