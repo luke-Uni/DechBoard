@@ -10,20 +10,18 @@ import dech.board.comment.repository.CommentRepository;
 
 @Service
 public class CommentService {
-    @Autowired
-	CommentRepository allComments= new CommentRepository();
-	
-	//method to ad a post
+	@Autowired
+	CommentRepository allComments = new CommentRepository();
+
+	// method to ad a post
 	public void addComment(Comment comment) {
-		
+
 		allComments.getComments().add(comment);
-		
-		
-		
+
 	}
+
 	public ArrayList<Comment> getComments() {
-		
-		
+
 		return allComments.getComments();
 	}
 }
