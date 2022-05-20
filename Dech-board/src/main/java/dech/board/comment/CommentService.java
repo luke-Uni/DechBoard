@@ -1,12 +1,9 @@
-package dech.board.comment.service;
+package dech.board.comment;
 
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import dech.board.comment.model.Comment;
-import dech.board.comment.repository.CommentRepository;
 
 @Service
 public class CommentService {
