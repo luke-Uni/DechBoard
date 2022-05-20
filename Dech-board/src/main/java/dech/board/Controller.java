@@ -34,8 +34,6 @@ public class Controller {
     @Autowired
     AuthorizationService authService = new AuthorizationService();
 
-    // Token token = new Token("123456");
-
     HashMap<String, String> jsonWT = new HashMap<String, String>();
 
     @CrossOrigin
