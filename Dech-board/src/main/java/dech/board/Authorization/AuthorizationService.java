@@ -1,5 +1,6 @@
 package dech.board.Authorization;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -8,6 +9,10 @@ import org.springframework.stereotype.Service;
 public class AuthorizationService {
 
 	AuthorizationRepository authorizationRepository = new AuthorizationRepository();
+
+	public ArrayList getAllTokens() {
+		return authorizationRepository.tokenList;
+	}
 
 	public Token createToken(String username) {
 
@@ -35,6 +40,10 @@ public class AuthorizationService {
 			}
 		}
 		return null;
+	}
+
+	public void changeToken(String newToken) {
+
 	}
 
 }
