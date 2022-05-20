@@ -27,4 +27,9 @@ public class Token {
 		this.username = username;
 	}
 
+	@Override
+	public String toString() {
+		return username + " " + token;
+	}
+
 }

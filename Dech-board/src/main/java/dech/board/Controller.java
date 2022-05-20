@@ -34,6 +34,8 @@ public class Controller {
     @Autowired
     AuthorizationService authService = new AuthorizationService();
 
+    Token token;
+
     HashMap<String, String> jsonWT = new HashMap<String, String>();
 
     @CrossOrigin
@@ -68,10 +70,13 @@ public class Controller {
     // Mapping to create a new post
     @RequestMapping(value = "/posts/getall", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getPost(@RequestHeader String authorization) {
+        System.out.println(authService.getUsernameByToKen(authorization) + " wants to see all Messages!");
         if (authService.getUsernameByToKen(authorization) != null) {
             if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization)) != null) {
+                System.out.println(authService.getAllTokens());
+                System.out.println(authorization);
                 if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
-                        .equals((authorization))) {
+                        .equals(authorization)) {
                     ArrayList<Post> list = postService.getPosts();
 
                     return ResponseEntity.status(HttpStatus.OK).body(list);
@@ -81,6 +86,7 @@ public class Controller {
             return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
 
         }
+        System.out.println("Username does not Exists");
         return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
     }
 
@@ -103,22 +109,19 @@ public class Controller {
 
         for (int i = 0; i < userService.getUser().size(); i++) {
 
-            if (userService.getUser().get(i).getUsername().toLowerCase().equals(user.getUsername().toLowerCase())
-                    && userService.getUser().get(i).getPassword().toLowerCase()
-                            .equals(user.getPassword().toLowerCase())) {
-                System.out.println(user + "Userrrr");
+            if (userService.getUser().get(i).getUsername().equalsIgnoreCase(user.getUsername())
+                    && userService.getUser().get(i).getPassword().equalsIgnoreCase(
+                            user.getPassword())) {
+                System.out.println(user + " is logged in!");
 
-                System.out.println("1");
-
-                Token token = authService.createToken(user.getUsername());
-                // jsonWT.put(user.getUsername(), uniqueID);
+                token = authService.createToken(user.getUsername());
 
                 return ResponseEntity.status(HttpStatus.OK).body(token);
 
             }
-            System.out.println("2");
+
+            System.out.println("Password or Username does not Exist!");
         }
-        System.out.println("3");
         return ResponseEntity.status(HttpStatus.OK).body(user);
 
     }
