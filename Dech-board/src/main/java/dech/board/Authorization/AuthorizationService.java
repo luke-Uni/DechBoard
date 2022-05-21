@@ -14,14 +14,25 @@ public class AuthorizationService {
 		return authorizationRepository.tokenList;
 	}
 
+	// Create a new token
 	public Token createToken(String username) {
-
 		UUID uuid = UUID.randomUUID();
+		for (int i = 0; i < authorizationRepository.tokenList.size(); i++) {
+
+			// If user once had a token, it will be replaced
+			if (authorizationRepository.tokenList.get(i).getUsername().equalsIgnoreCase(username)) {
+
+				authorizationRepository.tokenList.get(i).setToken(uuid.toString());
+				return authorizationRepository.tokenList.get(i);
+			}
+		}
+
 		Token token = new Token(uuid.toString(), username);
 
 		authorizationRepository.getTokenList().add(token);
 
 		return token;
+
 	}
 
 	public String getTokenByUsername(String username) {
@@ -40,10 +51,6 @@ public class AuthorizationService {
 			}
 		}
 		return null;
-	}
-
-	public void changeToken(String newToken) {
-
 	}
 
 }
