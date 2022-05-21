@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
+//import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,7 +32,7 @@ public class ConversationController {
 	@CrossOrigin
 	// Mapping to create a new post
 	@RequestMapping(value = "/conversation/getall", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getAllMessages(@PathVariable String recipient, @RequestHeader String authorization) {
+	public ResponseEntity<?> getAllConversations( @RequestHeader String authorization) {
 
 		if (authService.getUsernameByToKen(authorization) != null) {
 			// System.out.println(authService.getUsernameByToKen(authorization));
@@ -44,7 +44,7 @@ public class ConversationController {
 						.equals((authorization))) {
 
 					
-
+							System.out.println(authService.getUsernameByToKen(authorization));
 					ArrayList<Conversation> conversations = conversationService.getAllConversation(authService.getUsernameByToKen(authorization));
 
 					System.out.println(conversations);

@@ -14,12 +14,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import dech.board.Authorization.AuthorizationService;
+import dech.board.conversation.ConversationServiceImpl;
 
 
 @CrossOrigin
 @RestController
 public class MessageController {
 	
+	@Autowired
+	ConversationServiceImpl conversationService = new ConversationServiceImpl();
+
+
 	@Autowired
 	MessageServiceImpl messageServcice = new MessageServiceImpl();
 	
@@ -42,6 +47,7 @@ public class MessageController {
 	                if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
 	                        .equals((authorization))) {
 	                    // post.setImportant(true);
+						conversationService.createConversation(authService.getUsernameByToKen(authorization), message.getRecipient());
 	                    
 	                	System.out.println(message);
 	                	messageServcice.createMessage(message);

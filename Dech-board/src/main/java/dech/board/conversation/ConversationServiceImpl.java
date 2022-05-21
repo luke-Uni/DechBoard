@@ -22,8 +22,7 @@ public class ConversationServiceImpl {
 		}
 		return list;
 
-	}
-	
+	}	
 	
 	public void createConversation (String username, String recipient) {
 		for (int i = 0; i < conversationRepository.conversationList.size(); i++) {
@@ -38,6 +37,7 @@ public class ConversationServiceImpl {
 		}
 		
 		conversationRepository.conversationList.add(new Conversation(username,recipient));
+		
 
 		
 	}

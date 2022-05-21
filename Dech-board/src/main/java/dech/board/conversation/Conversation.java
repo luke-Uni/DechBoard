@@ -44,6 +44,10 @@ public class Conversation {
 		this.lastMessageSend = lastMessageSend;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "Conversation [user1=" + user1 + ", user2=" + user2 + ", conversationId=" + conversationId
+				+ ", lastMessageSend=" + lastMessageSend + "]";
+	}
 	
 }
