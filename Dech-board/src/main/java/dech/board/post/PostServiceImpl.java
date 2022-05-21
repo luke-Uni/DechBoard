@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PostServiceImpl implements MessageService {
+public class PostServiceImpl  {
 
 	@Autowired
 	PostRepository messageRepo = new PostRepository();
