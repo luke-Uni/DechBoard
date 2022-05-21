@@ -28,6 +28,18 @@ public class UserService {
 		return false;
 	}
 
+	public boolean passwordIsCorrect(String username, String password) {
+
+		for (int i = 0; i < userRepository.allUser.size(); i++) {
+			if (checkIfUsernameExists(userRepository.allUser.get(i).getUsername())) {
+				if (userRepository.allUser.get(i).getPassword().equals(password)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public ArrayList<User> getUser() {
 		return this.userRepository.userList();
 	}

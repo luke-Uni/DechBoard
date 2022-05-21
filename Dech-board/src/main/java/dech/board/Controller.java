@@ -107,33 +107,33 @@ public class Controller {
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> login(@RequestBody User user) {
 
-        for (int i = 0; i < userService.getUser().size(); i++) {
+        if (userService.checkIfUsernameExists(user.getUsername())) {
+            if (userService.passwordIsCorrect(user.getUsername(), user.getPassword())) {
 
-            if (userService.getUser().get(i).getUsername().equalsIgnoreCase(user.getUsername())
-                    && userService.getUser().get(i).getPassword().equalsIgnoreCase(
-                            user.getPassword())) {
-                System.out.println(user + " is logged in!");
+                System.out.println(user.getUsername() + " is logged in!");
 
                 token = authService.createToken(user.getUsername());
 
                 return ResponseEntity.status(HttpStatus.OK).body(token);
-
             }
+            System.out.println("Password is incorrect");
 
-            System.out.println("Password or Username does not Exist!");
         }
+
+        System.out.println("Username does not Exist!");
         return ResponseEntity.status(HttpStatus.OK).body(user);
 
     }
+
     @CrossOrigin
     // Mapping to get existing Users
-    @RequestMapping(value = "/getUsers", method = RequestMethod.GET,  produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/getUsers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getUsers() {
-        //if a user wants the List of all Users
-        ArrayList<User> userList= new ArrayList<>();
+        // if a user wants the List of all Users
+        ArrayList<User> userList = new ArrayList<>();
         for (int i = 0; i < userService.getUser().size(); i++) {
             userList.add(userService.getUser().get(i));
-          
+
         }
         return ResponseEntity.status(HttpStatus.OK).body(userList);
 

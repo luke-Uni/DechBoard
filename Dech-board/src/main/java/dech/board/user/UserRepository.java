@@ -6,10 +6,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserRepository {
-  ArrayList<User> addUser = new ArrayList<>();
+  ArrayList<User> allUser = new ArrayList<>();
 
   public ArrayList<User> userList() {
 
-    return addUser;
+    return allUser;
   }
 }
