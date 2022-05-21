@@ -125,5 +125,18 @@ public class Controller {
         return ResponseEntity.status(HttpStatus.OK).body(user);
 
     }
+    @CrossOrigin
+    // Mapping to get existing Users
+    @RequestMapping(value = "/getUsers", method = RequestMethod.GET,  produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getUsers() {
+        //if a user wants the List of all Users
+        ArrayList<User> userList= new ArrayList<>();
+        for (int i = 0; i < userService.getUser().size(); i++) {
+            userList.add(userService.getUser().get(i));
+          
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(userList);
+
+    }
 
 }
