@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import dech.board.Authorization.AuthorizationRepository;
 import dech.board.Authorization.AuthorizationService;
-import dech.board.post.Post;
+
 
 @CrossOrigin
 @RestController

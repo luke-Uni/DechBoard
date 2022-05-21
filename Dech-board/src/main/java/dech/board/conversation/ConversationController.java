@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import dech.board.Authorization.AuthorizationService;
-import dech.board.message.Message;
 import dech.board.message.MessageServiceImpl;
 
 public class ConversationController {
