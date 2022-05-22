@@ -94,11 +94,14 @@ public class Controller {
     // Mapping to create a new user
     @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createUser(@RequestBody User user) {
+            if(userService.checkunimailFrankfurt(user)){
 
-        userService.createUser(user);
+                userService.createUser(user);
 
-        return ResponseEntity.status(HttpStatus.OK).body(user);
-
+                return ResponseEntity.status(HttpStatus.OK).body(user);
+            }
+       
+            return new ResponseEntity<String>(HttpStatus.EXPECTATION_FAILED);
     }
 
     @CrossOrigin
