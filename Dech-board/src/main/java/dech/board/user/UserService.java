@@ -14,8 +14,11 @@ public class UserService {
 	UserRepository userRepository = new UserRepository();
 
 	public void createUser(User user) {
+		if(checkunimailFrankfurt(user)){
 		userRepository.userList().add(user);
+		System.out.println("User " + user.getUsername() + " created!");
 	}
+}
 
 	public Boolean checkIfUsernameExists(String username) {
 		for (int i = 0; i < userRepository.userList().size(); i++) {
@@ -38,6 +41,16 @@ public class UserService {
 			}
 		}
 		return false;
+	}
+
+
+
+	public boolean checkunimailFrankfurt(User user){
+		if(user.getEmail().endsWith("fra-uas.de")){
+			return true;
+		}
+		return false;
+
 	}
 
 	public ArrayList<User> getUser() {

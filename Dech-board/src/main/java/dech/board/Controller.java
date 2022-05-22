@@ -91,19 +91,18 @@ public class Controller {
     }
 
     @CrossOrigin
-    // Mapping to create a new post
+    // Mapping to create a new user
     @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createUser(@RequestBody User user) {
 
         userService.createUser(user);
-        System.out.println(user + "Userrrr");
 
         return ResponseEntity.status(HttpStatus.OK).body(user);
 
     }
 
     @CrossOrigin
-    // Mapping to create a new post
+    // Mapping to login
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> login(@RequestBody User user) {
 
