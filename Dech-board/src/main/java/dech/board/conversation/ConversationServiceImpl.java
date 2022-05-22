@@ -1,5 +1,6 @@
 package dech.board.conversation;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
@@ -44,7 +45,7 @@ public class ConversationServiceImpl {
 					||
 					conversationRepository.conversationList.get(i).getUser2().equalsIgnoreCase(username)
 							&& conversationRepository.conversationList.get(i).getUser1().equalsIgnoreCase(recipient)) {
-
+								conversationRepository.conversationList.get(i).setLastMessageSend(LocalDateTime.now());
 								return;
 			}
 		}
