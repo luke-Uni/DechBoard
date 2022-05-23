@@ -30,7 +30,7 @@ public class ConversationController {
 	AuthorizationService authService = new AuthorizationService();
 
 	@CrossOrigin
-	// Mapping to create a new post
+	// Mapping to get all conversations of the current user
 	@RequestMapping(value = "/conversation/getall", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getAllConversations( @RequestHeader String authorization) {
 

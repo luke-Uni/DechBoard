@@ -10,7 +10,7 @@ public class AuthorizationService {
 
 	AuthorizationRepository authorizationRepository = new AuthorizationRepository();
 
-	public ArrayList getAllTokens() {
+	public ArrayList<Token> getAllTokens() {
 		return authorizationRepository.tokenList;
 	}
 

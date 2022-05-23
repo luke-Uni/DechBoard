@@ -10,6 +10,7 @@ public class ConversationServiceImpl {
 
 	ConversationRepository conversationRepository = new ConversationRepository();
 
+	//Function to gett all conversations of one user
 	public ArrayList<Conversation> getAllConversation(String username) {
 
 		ArrayList<Conversation> list = new ArrayList<>();
@@ -38,6 +39,7 @@ public class ConversationServiceImpl {
 
 	}
 
+	//Function to create a new conversation between two user
 	public void createConversation(String username, String recipient) {
 		for (int i = 0; i < conversationRepository.conversationList.size(); i++) {
 			if (conversationRepository.conversationList.get(i).getUser1().equalsIgnoreCase(username)

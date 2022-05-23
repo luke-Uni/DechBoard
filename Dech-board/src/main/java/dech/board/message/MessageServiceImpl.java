@@ -12,7 +12,7 @@ public class MessageServiceImpl {
 
 	MessageRepository messageRepository = new MessageRepository();
 
-	// Add a message
+	// Create and Add a message to the repository
 	public Message createMessage(Message message) {
 
 		if (message.getContent() != null && message.getUsername() != null) {

@@ -3,8 +3,10 @@ package dech.board.message;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 
+// Compares the dates of messages and orders them descending 
 public class LocalDateTimeComparator implements Comparator < LocalDateTime >
 {
+
     @Override
     public int compare ( LocalDateTime o1 , LocalDateTime o2 )
     {
