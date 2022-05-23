@@ -42,7 +42,7 @@ public class MessageController {
 	        message.setUsername(authService.getUsernameByToKen(authorization));
 	     
 	        if (authService.getUsernameByToKen(authorization) != null) {
-	        	System.out.println(authService.getUsernameByToKen(authorization));
+	        	System.out.println(authService.getUsernameByToKen(authorization)+" created a message");
 	            if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization)) != null) {
 	                if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
 	                        .equals((authorization))) {

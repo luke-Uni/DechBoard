@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MessageServiceImpl {
 
+	@Autowired
 	MessageRepository messageRepository = new MessageRepository();
 
 	// Create and Add a message to the repository
@@ -28,12 +30,12 @@ public class MessageServiceImpl {
 	// Get all messages of one conversation
 	public ArrayList<Message> getMessages(String username, String recipient) {
 
-		System.out.println("Erstens");
+		System.out.println("Ich geh in die ArrayList messageList");
 		ArrayList<Message> messages = new ArrayList<>();
 		for (int i = 0; i < messageRepository.messageList.size(); i++) {
 			if (messageRepository.messageList.get(i).getUsername().equals(username)
 					&& messageRepository.messageList.get(i).getRecipient().equals(recipient)) {
-				System.out.println("Zweitens");
+				System.out.println("Ich hole mir die Messages");
 				messageRepository.messageList.get(i).setState(DirectionState.SEND);
 				messages.add(messageRepository.messageList.get(i));
 			}
