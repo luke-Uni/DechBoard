@@ -1,10 +1,18 @@
 package dech.board.post;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 //import com.fasterxml.jackson.annotation.JsonFormat;
 
+@Document(collection = "Post")
 public class Post {
 	// Attributes for a post on the dashboard
-	private String postId;
+	@Id
+	private int postId;
+
 	private String username;
 	private String title;
 	private String content;
@@ -12,24 +20,37 @@ public class Post {
 	private int downVotes;
 	private Boolean important;
 
+	private static int counter = 1;
+
 	// The Attributes upVotes and downVotes dont belong in the Constructer
+	@JsonCreator
 	public Post(String username, String title, String content,
 			Boolean important) {
 
-		this.postId = "1";
+		this.postId = ++counter;
 		this.username = username;
 		this.title = title;
 		this.content = content;
 		this.important = important;
 
-		// TODO Auto-generated constructor stub
 	}
 
-	public String getMessageId() {
+	@JsonCreator
+	public Post(String username, String title, String content) {
+
+		this.postId = ++counter;
+		this.username = username;
+		this.title = title;
+		this.content = content;
+		this.important = false;
+
+	}
+
+	public int getMessageId() {
 		return postId;
 	}
 
-	public void setMessageId(String messageId) {
+	public void setMessageId(int messageId) {
 		this.postId = messageId;
 	}
 

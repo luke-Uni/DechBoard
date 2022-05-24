@@ -1,26 +1,26 @@
 package dech.board.post;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PostServiceImpl  {
-	
+public class PostServiceImpl {
+
 	@Autowired
-	PostRepository messageRepo = new PostRepository();
+	PostRepository postRepository;
 
 	// method to ad a post
 	public void addPost(Post post) {
 
-		messageRepo.messageList.add(post);
+		postRepository.save(post);
 
 	}
 
-	public ArrayList<Post> getPosts() {
+	public List<Post> getPosts() {
 
-		return messageRepo.messageList;
+		return postRepository.findAll();
 	}
 
 }
