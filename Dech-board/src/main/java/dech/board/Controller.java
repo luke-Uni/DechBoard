@@ -49,14 +49,12 @@ public class Controller {
             if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization)) != null) {
                 if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
                         .equals((authorization))) {
-                    post.setImportant(true);
-                    System.out.println("Hallo2");
 
                     post.setUsername(authService.getUsernameByToKen(authorization));
 
                     postService.addPost(post);
                     System.out.println(post);
-                    return ResponseEntity.status(HttpStatus.OK).body("Post successfully created");
+                    return ResponseEntity.status(HttpStatus.OK).body(postService.getPosts());
                 }
                 return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
             }
