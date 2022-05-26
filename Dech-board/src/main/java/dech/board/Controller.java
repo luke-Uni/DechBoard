@@ -2,6 +2,8 @@ package dech.board;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -39,7 +41,7 @@ public class Controller {
 
     @CrossOrigin
     // Mapping to create a new post
-    @RequestMapping(value = "/posts/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/posts/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addPost(@RequestBody Post post, @RequestHeader String authorization) {
         System.out.println(authorization + "AUTH");
         System.out.println(jsonWT);
@@ -54,7 +56,7 @@ public class Controller {
 
                     postService.addPost(post);
                     System.out.println(post);
-                    return ResponseEntity.status(HttpStatus.OK).body("Post successfully created" + post);
+                    return ResponseEntity.status(HttpStatus.OK).body("Post successfully created");
                 }
                 return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
             }
@@ -76,7 +78,7 @@ public class Controller {
                 System.out.println(authorization);
                 if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
                         .equals(authorization)) {
-                    ArrayList<Post> list = postService.getPosts();
+                    List<Post> list = postService.getPosts();
 
                     return ResponseEntity.status(HttpStatus.OK).body(list);
                 }
@@ -108,9 +110,9 @@ public class Controller {
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> login(@RequestBody User user) {
 
+        System.out.println(user.getUsername() + " wants to Login!");
         if (userService.checkIfUsernameExists(user.getUsername())) {
             if (userService.passwordIsCorrect(user.getUsername(), user.getPassword())) {
-
                 System.out.println(user.getUsername() + " is logged in!");
 
                 token = authService.createToken(user.getUsername());
