@@ -1,6 +1,5 @@
 package dech.board.conversation;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +39,7 @@ public class ConversationController {
 			if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization)) != null) {
 
 				// System.out.println(authService.getTokenByUsername(authService.getUsernameByToKen(authorization)));
-
+				
 				if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
 						.equals((authorization))) {
 
