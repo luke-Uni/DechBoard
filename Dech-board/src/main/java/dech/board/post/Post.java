@@ -37,7 +37,10 @@ public class Post {
 
 	}
 
+<<<<<<< HEAD
 	//@JsonCreator
+=======
+>>>>>>> ea827b973016b7acec71c0304e23c60f4709a1ef
 	public Post(String title, String content) {
 
 		this.postId = ++counter;
@@ -107,7 +110,8 @@ public class Post {
 	@Override
 	public String toString() {
 		String s;
-		s = "Username: " + username + "\n" + "Title: " + title + "\n" + "Content: " + "\n" + content +"\n" + "Important: " +important;
+		s = "Username: " + username + "\n" + "Title: " + title + "\n" + "Content: " + "\n" + content + "\n"
+				+ "Important: " + important;
 		return s;
 	}
 
