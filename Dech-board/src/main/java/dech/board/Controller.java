@@ -41,7 +41,7 @@ public class Controller {
 
     @CrossOrigin
     // Mapping to create a new post
-    @RequestMapping(value = "/posts/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/posts/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addPost(@RequestBody Post post, @RequestHeader String authorization) {
         System.out.println(authorization + "AUTH");
         System.out.println(jsonWT);
