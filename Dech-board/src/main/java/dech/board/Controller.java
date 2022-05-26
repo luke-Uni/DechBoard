@@ -120,7 +120,7 @@ public class Controller {
         }
 
         System.out.println("Username does not Exist!");
-        return ResponseEntity.status(HttpStatus.OK).body(user);
+        return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 
     }
 
