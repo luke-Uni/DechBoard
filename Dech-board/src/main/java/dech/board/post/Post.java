@@ -3,6 +3,7 @@ package dech.board.post;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 //import com.fasterxml.jackson.annotation.JsonFormat;
@@ -23,6 +24,7 @@ public class Post {
 	private static int counter = 1;
 
 	// The Attributes upVotes and downVotes dont belong in the Constructer
+	@PersistenceConstructor
 	@JsonCreator
 	public Post(String title, String content,
 			Boolean important) {
@@ -35,7 +37,7 @@ public class Post {
 
 	}
 
-	@JsonCreator
+	//@JsonCreator
 	public Post(String title, String content) {
 
 		this.postId = ++counter;
@@ -105,7 +107,7 @@ public class Post {
 	@Override
 	public String toString() {
 		String s;
-		s = "Username: " + username + "\n" + "Title: " + title + "\n" + "Content: " + "\n" + content + important;
+		s = "Username: " + username + "\n" + "Title: " + title + "\n" + "Content: " + "\n" + content +"\n" + "Important: " +important;
 		return s;
 	}
 
