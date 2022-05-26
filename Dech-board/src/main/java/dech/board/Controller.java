@@ -49,11 +49,7 @@ public class Controller {
             if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization)) != null) {
                 if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
                         .equals((authorization))) {
-<<<<<<< HEAD
-                    //post.setImportant(true);
-                    //System.out.println("Hallo2");
-=======
->>>>>>> ea827b973016b7acec71c0304e23c60f4709a1ef
+
 
                     post.setUsername(authService.getUsernameByToKen(authorization));
 
