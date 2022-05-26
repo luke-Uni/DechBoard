@@ -1,6 +1,7 @@
 package dech.board.conversation;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,7 @@ public class ConversationController {
 	@CrossOrigin
 	// Mapping to get all conversations of the current user
 	@RequestMapping(value = "/conversation/getall", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getAllConversations( @RequestHeader String authorization) {
+	public ResponseEntity<?> getAllConversations(@RequestHeader String authorization) {
 
 		if (authService.getUsernameByToKen(authorization) != null) {
 			// System.out.println(authService.getUsernameByToKen(authorization));
@@ -43,9 +44,9 @@ public class ConversationController {
 				if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
 						.equals((authorization))) {
 
-					
-							System.out.println(authService.getUsernameByToKen(authorization));
-					ArrayList<Conversation> conversations = conversationService.getAllConversation(authService.getUsernameByToKen(authorization));
+					System.out.println(authService.getUsernameByToKen(authorization));
+					List<Conversation> conversations = conversationService
+							.getAllConversation(authService.getUsernameByToKen(authorization));
 
 					System.out.println(conversations);
 

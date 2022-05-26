@@ -1,7 +1,6 @@
 package dech.board.message;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -42,7 +41,7 @@ public class MessageServiceImpl {
 		for (int i = 0; i < returnMessages.size(); i++) {
 			if (returnMessages.get(i).getUsername().equals(username)
 					&& returnMessages.get(i).getRecipient().equals(recipient)) {
-						//Unlimited error
+				// Unlimited error
 				System.out.println("Ich hole mir die Messages");
 				returnMessages.get(i).setState(DirectionState.SEND);
 				messages.add(returnMessages.get(i));
@@ -61,9 +60,14 @@ public class MessageServiceImpl {
 
 		}
 		System.out.println("sortieren");
+<<<<<<< HEAD
 		getMessageListDescTIME(messages);
 		System.out.println(messages);
 		
+=======
+		getMessageListDescTIME(returnMessages);
+
+>>>>>>> 2ec7b399854fe1322fe09a7c0685ae85aeadf756
 		return messages;
 
 	}
