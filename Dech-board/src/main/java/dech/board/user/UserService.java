@@ -27,7 +27,9 @@ public class UserService {
 			if (aUser.getUsername().equalsIgnoreCase(user.getUsername())) {
 				return "Username already exists!";
 			} else if (checkunimailFrankfurt(user)) {
-				return "Email already exists!";
+				return "Email has to be from University!";
+			} else if (aUser.getEmail().equalsIgnoreCase(user.getEmail())) {
+				return "Email is already in use!";
 			}
 		}
 
