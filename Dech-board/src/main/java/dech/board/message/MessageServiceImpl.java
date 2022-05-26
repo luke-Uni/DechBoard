@@ -1,6 +1,7 @@
 package dech.board.message;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -34,17 +35,17 @@ public class MessageServiceImpl {
 	public List<Message> getMessages(String username, String recipient) {
 
 		System.out.println("Ich geh in die ArrayList messageList");
-
-		List<Message> messages = messageRepository.findAll();
+		
+		List<Message> messages = new ArrayList<Message>();
 		List<Message> returnMessages = messageRepository.findAll();
-		System.out.println(returnMessages.size());
+		//System.out.println(returnMessages.size());
 		for (int i = 0; i < returnMessages.size(); i++) {
 			if (returnMessages.get(i).getUsername().equals(username)
 					&& returnMessages.get(i).getRecipient().equals(recipient)) {
 				// Unlimited error
 				System.out.println("Ich hole mir die Messages");
 				returnMessages.get(i).setState(DirectionState.SEND);
-				messages.add(messages.get(i));
+				messages.add(returnMessages.get(i));
 			}
 
 		}
@@ -54,14 +55,15 @@ public class MessageServiceImpl {
 					&& returnMessages.get(i).getUsername().equals(recipient)) {
 				System.out.println("Drittens");
 				returnMessages.get(i).setState(DirectionState.RECEIVED);
-				messages.add(messages.get(i));
+				messages.add(returnMessages.get(i));
 
 			}
 
 		}
 		System.out.println("sortieren");
-		getMessageListDescTIME(returnMessages);
-
+		getMessageListDescTIME(messages);
+		System.out.println(messages);
+		
 		return messages;
 
 	}
