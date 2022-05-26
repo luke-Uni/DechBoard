@@ -38,17 +38,27 @@ public class ConversationServiceImpl {
 
 	// Function to create a new conversation between two user
 	public void createConversation(String username, String recipient) {
+
 		for (int i = 0; i < conversationRepository.findAll().size(); i++) {
+			System.out.println("Hallo1:- " + LocalDateTime.now());
 			if (conversationRepository.findAll().get(i).getUser1().equalsIgnoreCase(username)
 					&& conversationRepository.findAll().get(i).getUser2().equalsIgnoreCase(recipient)
 					||
 					conversationRepository.findAll().get(i).getUser2().equalsIgnoreCase(username)
 							&& conversationRepository.findAll().get(i).getUser1().equalsIgnoreCase(recipient)) {
-				conversationRepository.findAll().get(i).setLastMessageSend(LocalDateTime.now());
+				System.out.println("Hallo2:- " + LocalDateTime.now());
+
+				//conversationRepository.findAll().get(i).setLastMessageSend(LocalDateTime.now());
+				Conversation conversationDTO = conversationRepository.findAll().get(i);
+				conversationDTO.setLastMessageSend(LocalDateTime.now());
+				conversationRepository.delete(conversationDTO);
+				conversationRepository.save(conversationDTO);
+				System.out.println(conversationRepository.findAll().get(i).getLastMessageSend());
+
 				return;
 			}
 		}
-
+		System.out.println("Hallo3:- " + LocalDateTime.now());
 		conversationRepository.save(new Conversation(username, recipient));
 
 	}
