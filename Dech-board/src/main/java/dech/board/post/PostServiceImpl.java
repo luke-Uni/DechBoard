@@ -20,7 +20,8 @@ public class PostServiceImpl {
 
 	public List<Post> getPosts() {
 
-		return postRepository.findAll();
+		List<Post> allPosts =  postRepository.findAll();
+		return allPosts;
 	}
 
 }
