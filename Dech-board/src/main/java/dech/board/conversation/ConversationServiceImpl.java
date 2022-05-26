@@ -3,56 +3,53 @@ package dech.board.conversation;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ConversationServiceImpl {
 
-	ConversationRepository conversationRepository = new ConversationRepository();
+	@Autowired
+	ConversationRepository conversationRepository;
 
-	//Function to gett all conversations of one user
+	// Function to gett all conversations of one user
 	public ArrayList<Conversation> getAllConversation(String username) {
 
 		ArrayList<Conversation> list = new ArrayList<>();
 
-		for (int i = 0; i < conversationRepository.conversationList.size(); i++) {
-			if (conversationRepository.conversationList.get(i).getUser1().equalsIgnoreCase(username)
-					|| conversationRepository.conversationList.get(i).getUser2().equalsIgnoreCase(username)) {
+		for (int i = 0; i < conversationRepository.findAll().size(); i++) {
+			if (conversationRepository.findAll().get(i).getUser1().equalsIgnoreCase(username)
+					|| conversationRepository.findAll().get(i).getUser2().equalsIgnoreCase(username)) {
 
-			
-				 if (conversationRepository.conversationList.get(i).getUser2().equals(username)){
-					String ui= conversationRepository.conversationList.get(i).getUser1();
-				conversationRepository.conversationList.get(i).setUser1(username);
-				conversationRepository.conversationList.get(i).setUser2(ui);
+				if (conversationRepository.findAll().get(i).getUser2().equals(username)) {
+					String ui = conversationRepository.findAll().get(i).getUser1();
+					conversationRepository.findAll().get(i).setUser1(username);
+					conversationRepository.findAll().get(i).setUser2(ui);
 
-				
 				}
 
-			// else if(conversationRepository.conversationList.get(i).getUser1().equals(username)){
-			// 		list.add(conversationRepository.conversationList.get(i));
-					
-			// 	}
-			list.add(conversationRepository.conversationList.get(i));}
-				
+				list.add(conversationRepository.findAll().get(i));
+			}
+
 		}
 		return list;
 
 	}
 
-	//Function to create a new conversation between two user
+	// Function to create a new conversation between two user
 	public void createConversation(String username, String recipient) {
-		for (int i = 0; i < conversationRepository.conversationList.size(); i++) {
-			if (conversationRepository.conversationList.get(i).getUser1().equalsIgnoreCase(username)
-					&& conversationRepository.conversationList.get(i).getUser2().equalsIgnoreCase(recipient)
+		for (int i = 0; i < conversationRepository.findAll().size(); i++) {
+			if (conversationRepository.findAll().get(i).getUser1().equalsIgnoreCase(username)
+					&& conversationRepository.findAll().get(i).getUser2().equalsIgnoreCase(recipient)
 					||
-					conversationRepository.conversationList.get(i).getUser2().equalsIgnoreCase(username)
-							&& conversationRepository.conversationList.get(i).getUser1().equalsIgnoreCase(recipient)) {
-								conversationRepository.conversationList.get(i).setLastMessageSend(LocalDateTime.now());
-								return;
+					conversationRepository.findAll().get(i).getUser2().equalsIgnoreCase(username)
+							&& conversationRepository.findAll().get(i).getUser1().equalsIgnoreCase(recipient)) {
+				conversationRepository.findAll().get(i).setLastMessageSend(LocalDateTime.now());
+				return;
 			}
 		}
 
-		conversationRepository.conversationList.add(new Conversation(username, recipient));
+		conversationRepository.save(new Conversation(username, recipient));
 
 	}
 

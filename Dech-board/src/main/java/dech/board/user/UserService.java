@@ -1,28 +1,30 @@
 package dech.board.user;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 @Service
-
 public class UserService {
 	// this is the arrayList, it stores the data of Users. Later on it is going to
 	// be replaced by a database
 	@Autowired
-	UserRepository userRepository = new UserRepository();
+	UserRepository userRepository;
 
 	public void createUser(User user) {
-		if(checkunimailFrankfurt(user)){
-		userRepository.userList().add(user);
-		System.out.println("User " + user.getUsername() + " created!");
+		if (checkunimailFrankfurt(user)) {
+			userRepository.save(user);
+			System.out.println("User " + user.getUsername() + " created!");
+		}
 	}
-}
 
 	public Boolean checkIfUsernameExists(String username) {
-		for (int i = 0; i < userRepository.userList().size(); i++) {
-			if (userRepository.userList().get(i).getUsername().toLowerCase().equals(username.toLowerCase())) {
+
+		for (int i = 0; i < userRepository.findAll().size(); i++) {
+			if (userRepository.findAll().get(i).getUsername().toLowerCase().equals(username.toLowerCase())) {
 				return true;
 
 			}
@@ -33,9 +35,11 @@ public class UserService {
 
 	public boolean passwordIsCorrect(String username, String password) {
 
-		for (int i = 0; i < userRepository.allUser.size(); i++) {
-			if (checkIfUsernameExists(userRepository.allUser.get(i).getUsername())) {
-				if (userRepository.allUser.get(i).getPassword().equals(password)) {
+		List<User> userList = userRepository.findAll();
+
+		for (int i = 0; i < userList.size(); i++) {
+			if (userList.get(i).getUsername().equalsIgnoreCase(username)) {
+				if (userList.get(i).getPassword().equals(password)) {
 					return true;
 				}
 			}
@@ -43,18 +47,16 @@ public class UserService {
 		return false;
 	}
 
-
-
-	public boolean checkunimailFrankfurt(User user){
-		if(user.getEmail().endsWith("fra-uas.de")){
+	public boolean checkunimailFrankfurt(User user) {
+		if (user.getEmail().endsWith("fra-uas.de")) {
 			return true;
 		}
 		return false;
 
 	}
 
-	public ArrayList<User> getUser() {
-		return this.userRepository.userList();
+	public List<User> getUser() {
+		return userRepository.findAll();
 	}
 
 }

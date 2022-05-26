@@ -2,7 +2,14 @@ package dech.board.message;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "Message")
 public class Message {
+
+	@Id
+	private int id;
 
 	private String username;
 	private String content;
@@ -10,8 +17,11 @@ public class Message {
 	private LocalDateTime time;
 	private DirectionState state;
 
+	private static int counter = 1;
+
 	public Message(String username, String content, String recipient) {
 
+		this.id = ++counter;
 		this.username = username;
 		this.content = content;
 		this.recipient = recipient;
@@ -19,14 +29,21 @@ public class Message {
 		this.setState(DirectionState.SEND);
 
 	}
-	
-	public Message () {
-		
+
+	public Message() {
+
 	}
-	
+
+	public int getId() {
+		return id;
+	}
 
 	public String getUsername() {
 		return username;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public void setUsername(String username) {
@@ -69,8 +86,5 @@ public class Message {
 	public void setState(DirectionState state) {
 		this.state = state;
 	}
-	
-
-	
 
 }

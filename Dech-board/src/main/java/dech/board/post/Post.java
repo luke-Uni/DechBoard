@@ -24,11 +24,11 @@ public class Post {
 
 	// The Attributes upVotes and downVotes dont belong in the Constructer
 	@JsonCreator
-	public Post(String username, String title, String content,
+	public Post(String title, String content,
 			Boolean important) {
 
 		this.postId = ++counter;
-		this.username = username;
+		// this.username = username;
 		this.title = title;
 		this.content = content;
 		this.important = important;
@@ -36,10 +36,10 @@ public class Post {
 	}
 
 	@JsonCreator
-	public Post(String username, String title, String content) {
+	public Post(String title, String content) {
 
 		this.postId = ++counter;
-		this.username = username;
+		// this.username = username;
 		this.title = title;
 		this.content = content;
 		this.important = false;

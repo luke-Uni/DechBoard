@@ -2,7 +2,14 @@ package dech.board.conversation;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "Conversation")
 public class Conversation {
+
+	@Id
+	private int id;
 
 	private String user1;
 	private String user2;

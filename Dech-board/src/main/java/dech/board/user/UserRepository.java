@@ -1,15 +1,10 @@
 package dech.board.user;
 
-import java.util.ArrayList;
-
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+//MongoDb integration
 @Repository
-public class UserRepository {
-  ArrayList<User> allUser = new ArrayList<>();
+public interface UserRepository extends MongoRepository<User, Integer> {
 
-  public ArrayList<User> userList() {
-
-    return allUser;
-  }
 }

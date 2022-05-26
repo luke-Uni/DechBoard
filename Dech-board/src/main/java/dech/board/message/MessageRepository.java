@@ -1,14 +1,9 @@
 package dech.board.message;
 
-import java.util.ArrayList;
-
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-
 @Repository
-public class MessageRepository {
+public interface MessageRepository extends MongoRepository<Message, Integer> {
 
-	
-	ArrayList<Message> messageList = new ArrayList<>();
-	
 }
