@@ -35,7 +35,6 @@ public class Post {
 
 	}
 
-	@JsonCreator
 	public Post(String title, String content) {
 
 		this.postId = ++counter;
