@@ -60,14 +60,9 @@ public class MessageServiceImpl {
 
 		}
 		System.out.println("sortieren");
-<<<<<<< HEAD
 		getMessageListDescTIME(messages);
 		System.out.println(messages);
 		
-=======
-		getMessageListDescTIME(returnMessages);
-
->>>>>>> 2ec7b399854fe1322fe09a7c0685ae85aeadf756
 		return messages;
 
 	}
