@@ -19,6 +19,21 @@ public class UserService {
 		}
 	}
 
+	public String validInputs(User user) {
+
+		List<User> userList = userRepository.findAll();
+
+		for (User aUser : userList) {
+			if (aUser.getUsername().equalsIgnoreCase(user.getUsername())) {
+				return "Username already exists!";
+			} else if (checkunimailFrankfurt(user)) {
+				return "Email already exists!";
+			}
+		}
+
+		return "perfect";
+	}
+
 	public Boolean checkIfUsernameExists(String username) {
 
 		for (int i = 0; i < userRepository.findAll().size(); i++) {

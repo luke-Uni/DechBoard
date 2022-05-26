@@ -50,7 +50,6 @@ public class Controller {
                 if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
                         .equals((authorization))) {
 
-
                     post.setUsername(authService.getUsernameByToKen(authorization));
 
                     postService.addPost(post);
@@ -61,7 +60,7 @@ public class Controller {
             }
             return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
         }
-       // System.out.println("Hallo3");
+        // System.out.println("Hallo3");
         return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
 
     }
@@ -73,8 +72,6 @@ public class Controller {
         System.out.println(authService.getUsernameByToKen(authorization) + " wants to see all Messages!");
         if (authService.getUsernameByToKen(authorization) != null) {
             if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization)) != null) {
-                System.out.println(authService.getAllTokens());
-                System.out.println(authorization);
                 if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
                         .equals(authorization)) {
                     List<Post> list = postService.getPosts();
@@ -94,14 +91,14 @@ public class Controller {
     // Mapping to create a new user
     @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createUser(@RequestBody User user) {
-        if (userService.checkunimailFrankfurt(user)) {
+        if (userService.validInputs(user).equals("perfect")) {
 
             userService.createUser(user);
 
             return ResponseEntity.status(HttpStatus.OK).body(user);
         }
 
-        return new ResponseEntity<String>(HttpStatus.EXPECTATION_FAILED);
+        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(userService.validInputs(user));
     }
 
     @CrossOrigin
