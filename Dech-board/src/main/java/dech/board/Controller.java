@@ -49,8 +49,8 @@ public class Controller {
             if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization)) != null) {
                 if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
                         .equals((authorization))) {
-                    post.setImportant(true);
-                    System.out.println("Hallo2");
+                    //post.setImportant(true);
+                    //System.out.println("Hallo2");
 
                     post.setUsername(authService.getUsernameByToKen(authorization));
 
@@ -62,7 +62,7 @@ public class Controller {
             }
             return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
         }
-        System.out.println("Hallo3");
+       // System.out.println("Hallo3");
         return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
 
     }

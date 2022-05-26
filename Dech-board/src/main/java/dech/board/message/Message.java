@@ -2,6 +2,8 @@ package dech.board.message;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -19,6 +21,7 @@ public class Message {
 
 	private static int counter = 1;
 
+	@JsonCreator
 	public Message(String username, String content, String recipient) {
 
 		this.id = ++counter;

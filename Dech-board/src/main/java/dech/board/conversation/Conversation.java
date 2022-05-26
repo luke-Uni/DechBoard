@@ -9,15 +9,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Conversation {
 
 	@Id
-	private int id;
-
+	private  int id;
+	private static int counter = 1000;
 	private String user1;
 	private String user2;
 	private int conversationId;
 	private LocalDateTime lastMessageSend;
 
 	public Conversation(String user1, String user2) {
-
+		this.id= counter ++;
 		this.user1 = user1;
 		this.user2 = user2;
 		this.lastMessageSend = LocalDateTime.now();

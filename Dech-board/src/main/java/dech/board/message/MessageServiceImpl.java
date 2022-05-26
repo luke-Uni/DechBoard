@@ -35,30 +35,34 @@ public class MessageServiceImpl {
 	public List<Message> getMessages(String username, String recipient) {
 
 		System.out.println("Ich geh in die ArrayList messageList");
+
 		List<Message> messages = messageRepository.findAll();
-		for (int i = 0; i < messages.size(); i++) {
-			if (messages.get(i).getUsername().equals(username)
-					&& messages.get(i).getRecipient().equals(recipient)) {
+		List<Message> returnMessages = messageRepository.findAll();
+		System.out.println(returnMessages.size());
+		for (int i = 0; i < returnMessages.size(); i++) {
+			if (returnMessages.get(i).getUsername().equals(username)
+					&& returnMessages.get(i).getRecipient().equals(recipient)) {
+						//Unlimited error
 				System.out.println("Ich hole mir die Messages");
-				messages.get(i).setState(DirectionState.SEND);
+				returnMessages.get(i).setState(DirectionState.SEND);
 				messages.add(messages.get(i));
 			}
 
 		}
 
-		for (int i = 0; i < messages.size(); i++) {
-			if (messages.get(i).getRecipient().equals(username)
-					&& messages.get(i).getUsername().equals(recipient)) {
+		for (int i = 0; i < returnMessages.size(); i++) {
+			if (returnMessages.get(i).getRecipient().equals(username)
+					&& returnMessages.get(i).getUsername().equals(recipient)) {
 				System.out.println("Drittens");
-				messages.get(i).setState(DirectionState.RECEIVED);
+				returnMessages.get(i).setState(DirectionState.RECEIVED);
 				messages.add(messages.get(i));
 
 			}
 
 		}
 		System.out.println("sortieren");
-		getMessageListDescTIME(messages);
-
+		getMessageListDescTIME(returnMessages);
+		
 		return messages;
 
 	}
