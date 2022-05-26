@@ -2,6 +2,7 @@ package dech.board.conversation;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,9 @@ public class ConversationServiceImpl {
 	ConversationRepository conversationRepository;
 
 	// Function to gett all conversations of one user
-	public ArrayList<Conversation> getAllConversation(String username) {
+	public List<Conversation> getAllConversation(String username) {
 
-		ArrayList<Conversation> list = new ArrayList<>();
+		List<Conversation> list = new ArrayList<Conversation>();
 
 		for (int i = 0; i < conversationRepository.findAll().size(); i++) {
 			if (conversationRepository.findAll().get(i).getUser1().equalsIgnoreCase(username)
