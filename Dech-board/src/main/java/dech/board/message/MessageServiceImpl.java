@@ -1,6 +1,7 @@
 package dech.board.message;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -34,7 +35,7 @@ public class MessageServiceImpl {
 	public List<Message> getMessages(String username, String recipient) {
 
 		System.out.println("Ich geh in die ArrayList messageList");
-
+		
 		List<Message> messages = new ArrayList<Message>();
 		List<Message> returnMessages = messageRepository.findAll();
 		//System.out.println(returnMessages.size());
