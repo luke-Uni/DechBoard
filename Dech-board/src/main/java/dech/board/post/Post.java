@@ -37,8 +37,6 @@ public class Post {
 
 	}
 
-
-
 	public Post(String title, String content) {
 
 		this.postId = ++counter;
@@ -47,6 +45,14 @@ public class Post {
 		this.content = content;
 		this.important = false;
 
+	}
+
+	public int getPostId() {
+		return postId;
+	}
+
+	public void setPostId(int postId) {
+		this.postId = postId;
 	}
 
 	public int getMessageId() {
