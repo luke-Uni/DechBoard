@@ -2,10 +2,14 @@ package dech.board.confirmation;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ConfirmationService {
+
+    @Autowired
+    ConfirmationRepository confirmationRepository;
 
     public String generateToken() {
 
@@ -19,6 +23,15 @@ public class ConfirmationService {
         }
 
         return token;
+    }
+
+    public Confirmation createConfirmation(Confirmation confirmation) {
+        confirmation.setConfirmationToken(generateToken());
+        confirmation.setConfirmationState(ConfirmationState.UNCONFIRMED);
+
+        confirmationRepository.save(confirmation);
+        
+        return confirmation;
     }
 
 }
