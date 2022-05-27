@@ -14,12 +14,29 @@ public class MessageServiceImpl {
 
 	@Autowired
 	MessageRepository messageRepository;
+	
+
+	public int getHighestMessageId() {
+
+		int max = 1;
+
+		List<Message> allMessages = messageRepository.findAll();
+		for (int i = 0; i < allMessages.size(); i++) {
+			if (allMessages.get(i).getId() >= 1) {
+				max = allMessages.get(i).getId();
+			}
+
+		}
+
+		return max;
+	}
 
 	// Create and Add a message to the repository
 	public Message createMessage(Message message) {
 
 		if (message.getContent() != null && message.getUsername() != null) {
 			message.setTime(LocalDateTime.now());
+			message.setId(getHighestMessageId());
 			messageRepository.save(message);
 			return message;
 		} else {
