@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dech.board.Authorization.AuthorizationService;
 import dech.board.Authorization.Token;
+import dech.board.confirmation.Confirmation;
+import dech.board.confirmation.ConfirmationService;
 import dech.board.post.Post;
 import dech.board.post.PostServiceImpl;
 import dech.board.user.User;
@@ -34,6 +36,9 @@ public class Controller {
 
     @Autowired
     AuthorizationService authService = new AuthorizationService();
+
+    @Autowired
+    ConfirmationService confirmationService = new ConfirmationService();
 
     Token token;
 
@@ -95,6 +100,12 @@ public class Controller {
 
             userService.createUser(user);
 
+            Confirmation confirmation = new Confirmation(user.getEmail());
+
+            // Create a confirmation Token for the user, so they can confirm their account
+            // after registration
+            confirmationService.createConfirmation(confirmation);
+
             return ResponseEntity.status(HttpStatus.OK).body(user);
         }
 
@@ -135,6 +146,27 @@ public class Controller {
 
         }
         return ResponseEntity.status(HttpStatus.OK).body(userList);
+
+    }
+
+    @CrossOrigin
+    // Mapping to confirm a User after registration
+    @RequestMapping(value = "/confirmuser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> confirmUser(@RequestBody String email, @RequestBody String token) {
+
+        if (email != null && token != null) {
+
+            if (confirmationService.confirmationExists(email)) {
+                confirmationService.ConfirmUser(email, token);
+                return new ResponseEntity<String>(HttpStatus.OK);
+            }
+            System.out.println("Confirmation for [" +email+ " ] does not Exist!");
+            return new ResponseEntity<String>(HttpStatus.EXPECTATION_FAILED);
+
+        }
+
+        System.out.println("Wrong values in request");
+        return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 
     }
 
