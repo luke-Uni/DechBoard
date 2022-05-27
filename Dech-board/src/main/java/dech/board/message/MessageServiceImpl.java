@@ -40,8 +40,8 @@ public class MessageServiceImpl {
 		List<Message> returnMessages = messageRepository.findAll();
 		//System.out.println(returnMessages.size());
 		for (int i = 0; i < returnMessages.size(); i++) {
-			if (returnMessages.get(i).getUsername().equals(username)
-					&& returnMessages.get(i).getRecipient().equals(recipient)) {
+			if (returnMessages.get(i).getUsername().equalsIgnoreCase(username)
+					&& returnMessages.get(i).getRecipient().equalsIgnoreCase(recipient)) {
 				// Unlimited error
 				System.out.println("Ich hole mir die Messages");
 				returnMessages.get(i).setState(DirectionState.SEND);
@@ -51,8 +51,8 @@ public class MessageServiceImpl {
 		}
 
 		for (int i = 0; i < returnMessages.size(); i++) {
-			if (returnMessages.get(i).getRecipient().equals(username)
-					&& returnMessages.get(i).getUsername().equals(recipient)) {
+			if (returnMessages.get(i).getRecipient().equalsIgnoreCase(username)
+					&& returnMessages.get(i).getUsername().equalsIgnoreCase(recipient)) {
 				System.out.println("Drittens");
 				returnMessages.get(i).setState(DirectionState.RECEIVED);
 				messages.add(returnMessages.get(i));
