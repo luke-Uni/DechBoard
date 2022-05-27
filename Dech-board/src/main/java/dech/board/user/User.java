@@ -15,6 +15,8 @@ public class User {
 	private String username;
 	private String password;
 	private String email;
+	private State state; 
+
 
 	// private static int counter = 100;
 
@@ -26,6 +28,7 @@ public class User {
 		this.username = username;
 		this.password = password;
 		this.email = email;
+		
 	}
 
 	public int getId() {
@@ -59,6 +62,16 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
+	}
+
 
 	@Override
 	public String toString() {

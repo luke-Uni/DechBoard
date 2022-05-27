@@ -13,6 +13,25 @@ public class ConversationServiceImpl {
 	@Autowired
 	ConversationRepository conversationRepository;
 
+
+
+	public int getHighestConversationId() {
+
+		int max = 1;
+
+		List<Conversation> allConversations = conversationRepository.findAll();
+		for (int i = 0; i < allConversations.size(); i++) {
+			if (allConversations.get(i).getId() >= 1) {
+				max = allConversations.get(i).getId();
+			}
+
+		}
+
+		return max;
+	}
+
+
+
 	// Function to gett all conversations of one user
 	public List<Conversation> getAllConversation(String username) {
 
@@ -68,7 +87,9 @@ public class ConversationServiceImpl {
 			}
 		}
 		System.out.println("Hallo3:- " + LocalDateTime.now());
-		conversationRepository.save(new Conversation(username, recipient));
+		Conversation newConvo = new Conversation(username, recipient);
+		newConvo.setId(getHighestConversationId());
+		conversationRepository.save(newConvo);
 
 	}
 

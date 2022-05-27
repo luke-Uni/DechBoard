@@ -9,15 +9,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Conversation {
 
 	@Id
-	private  int id;
+	private int id;
 	private static int counter = 1000;
 	private String user1;
 	private String user2;
-	private int conversationId;
+	// private int conversationId;
 	private LocalDateTime lastMessageSend;
 
 	public Conversation(String user1, String user2) {
-		this.id= counter ++;
+		this.id = counter++;
 		this.user1 = user1;
 		this.user2 = user2;
 		this.lastMessageSend = LocalDateTime.now();
@@ -44,13 +44,13 @@ public class Conversation {
 		this.user2 = user2;
 	}
 
-	public int getConversationId() {
-		return conversationId;
-	}
+	// public int getConversationId() {
+	// return conversationId;
+	// }
 
-	public void setConversationId(int conversationId) {
-		this.conversationId = conversationId;
-	}
+	// public void setConversationId(int conversationId) {
+	// this.conversationId = conversationId;
+	// }
 
 	public LocalDateTime getLastMessageSend() {
 		return lastMessageSend;
@@ -60,9 +60,17 @@ public class Conversation {
 		this.lastMessageSend = lastMessageSend;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	@Override
 	public String toString() {
-		return "Conversation [user1=" + user1 + ", user2=" + user2 + ", conversationId=" + conversationId
+		return "Conversation [user1=" + user1 + ", user2=" + user2 + ", conversationId=" + id
 				+ ", lastMessageSend=" + lastMessageSend + "]";
 	}
 

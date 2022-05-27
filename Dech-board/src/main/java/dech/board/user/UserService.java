@@ -32,6 +32,7 @@ public class UserService {
 
 		if (checkunimailFrankfurt(user)) {
 			user.setId(getHighestUserId() + 1);
+			user.setState(State.UNCONFIRMED);
 			userRepository.save(user);
 			System.out.println("User " + user.getUsername() + " created!");
 		}

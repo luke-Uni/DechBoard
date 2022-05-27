@@ -36,7 +36,7 @@ public class MessageServiceImpl {
 
 		if (message.getContent() != null && message.getUsername() != null) {
 			message.setTime(LocalDateTime.now());
-			message.setId(getHighestMessageId());
+			message.setId(getHighestMessageId()+1);
 			messageRepository.save(message);
 			return message;
 		} else {
