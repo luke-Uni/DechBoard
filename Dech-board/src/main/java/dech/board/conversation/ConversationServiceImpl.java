@@ -39,7 +39,6 @@ public class ConversationServiceImpl {
 
 				list.add(conversationRepository.findAll().get(i));
 			}
-
 		}
 		System.out.println(list);
 		return list;
