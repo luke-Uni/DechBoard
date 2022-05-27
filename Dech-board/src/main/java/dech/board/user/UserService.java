@@ -1,5 +1,6 @@
 package dech.board.user;
 
+import java.lang.annotation.Retention;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,26 @@ public class UserService {
 	@Autowired
 	UserRepository userRepository;
 
+	// Get the highest Id
+	public int getHighestUserId() {
+
+		int max = 1;
+
+		List<User> allUser = userRepository.findAll();
+		for (int i = 0; i < allUser.size(); i++) {
+			if (allUser.get(i).getId() >= 1) {
+				max = allUser.get(i).getId();
+			}
+
+		}
+
+		return max;
+	}
+
 	public void createUser(User user) {
+
 		if (checkunimailFrankfurt(user)) {
+			user.setId(getHighestUserId() + 1);
 			userRepository.save(user);
 			System.out.println("User " + user.getUsername() + " created!");
 		}
@@ -74,14 +93,12 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
-
 	// public User checkAllParameters(User user){
-	// 	if(){
+	// if(){
 
-	// 	}
+	// }
 
-
-	// 	return user;
+	// return user;
 	// }
 
 }
