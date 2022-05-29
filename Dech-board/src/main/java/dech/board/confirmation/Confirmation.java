@@ -35,6 +35,15 @@ public class Confirmation {
         this.email = email;
     }
 
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
     public ConfirmationState getConfirmationState() {
         return confirmationStatus;
     }

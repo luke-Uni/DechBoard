@@ -6,9 +6,9 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dech.board.user.User;
-import dech.board.user.UserRepository;
-import dech.board.user.UserService;
+// import dech.board.user.User;
+// import dech.board.user.UserRepository;
+// import dech.board.user.UserService;
 
 
 @Service
@@ -17,8 +17,25 @@ public class ConfirmationService {
     @Autowired
     ConfirmationRepository confirmationRepository;
 
-    @Autowired
-    UserService userService;
+   // @Autowired
+    //UserService userService;
+
+    public int getHighestConversationId() {
+
+		int max = 1;
+
+		List<Confirmation> allConfirmations = confirmationRepository.findAll();
+		for (int i = 0; i < allConfirmations.size(); i++) {
+			if (allConfirmations.get(i).getId() >= 1) {
+				max = allConfirmations.get(i).getId();
+			}
+
+		}
+
+		return max;
+	}
+
+
 
     public String generateToken() {
 
@@ -37,6 +54,7 @@ public class ConfirmationService {
     public Confirmation createConfirmation(Confirmation confirmation) {
         confirmation.setConfirmationToken(generateToken());
         confirmation.setConfirmationState(ConfirmationState.UNCONFIRMED);
+        confirmation.setId(getHighestConversationId()+1);
 
         confirmationRepository.save(confirmation);
 
@@ -44,6 +62,10 @@ public class ConfirmationService {
     }
 
     //Confirm a User after registration
+
+
+
+
     public void ConfirmUser(String email, String token) {
         List<Confirmation> confList = confirmationRepository.findAll();
 
