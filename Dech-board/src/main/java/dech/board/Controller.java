@@ -18,9 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 import dech.board.Authorization.AuthorizationService;
 import dech.board.Authorization.Token;
 import dech.board.confirmation.Confirmation;
+import dech.board.confirmation.ConfirmationDTO;
 import dech.board.confirmation.ConfirmationService;
+import dech.board.confirmation.EmailSenderService;
 import dech.board.post.Post;
 import dech.board.post.PostServiceImpl;
+import dech.board.user.State;
 import dech.board.user.User;
 import dech.board.user.UserService;
 
@@ -39,6 +42,9 @@ public class Controller {
 
     @Autowired
     ConfirmationService confirmationService = new ConfirmationService();
+
+    @Autowired
+    EmailSenderService senderService = new EmailSenderService();
 
     Token token;
 
@@ -106,7 +112,11 @@ public class Controller {
             // after registration
             confirmationService.createConfirmation(confirmation);
 
+            senderService.sendEmail(user.getEmail(), "Confirm your E-Mail", "Hey, please confirm Your Email adress: \n http://localhost:8081/?#/confirmuser, \n Token: "+confirmationService.getTokenByEmail(user.getEmail()));
+
             return ResponseEntity.status(HttpStatus.OK).body(user);
+
+            
         }
 
         return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(userService.validInputs(user));
@@ -152,15 +162,20 @@ public class Controller {
     @CrossOrigin
     // Mapping to confirm a User after registration
     @RequestMapping(value = "/confirmuser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> confirmUser(@RequestBody String email, @RequestBody String token) {
+    public ResponseEntity<?> confirmUser(@RequestBody ConfirmationDTO confDTO) {
 
-        if (email != null && token != null) {
+        if (confDTO.getEmail() != null && confDTO.getToken() != null) {
 
-            if (confirmationService.confirmationExists(email)) {
-                confirmationService.ConfirmUser(email, token);
+            if (confirmationService.confirmationExists(confDTO.getEmail())) {
+                confirmationService.ConfirmUser(confDTO.getEmail(), confDTO.getToken());
+                User user= userService.getUserByEmail(confDTO.getEmail());
+                user.setState(State.CONFIRMED);
+
+                userService.replaceUser(user);
+
                 return new ResponseEntity<String>(HttpStatus.OK);
             }
-            System.out.println("Confirmation for [" +email+ " ] does not Exist!");
+            System.out.println("Confirmation for [" +confDTO.getEmail()+ " ] does not Exist!");
             return new ResponseEntity<String>(HttpStatus.EXPECTATION_FAILED);
 
         }

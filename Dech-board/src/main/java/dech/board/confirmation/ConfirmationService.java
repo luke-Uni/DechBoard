@@ -6,12 +6,19 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import dech.board.user.User;
+import dech.board.user.UserRepository;
+import dech.board.user.UserService;
+
 
 @Service
 public class ConfirmationService {
 
     @Autowired
     ConfirmationRepository confirmationRepository;
+
+    @Autowired
+    UserService userService;
 
     public String generateToken() {
 
@@ -47,10 +54,14 @@ public class ConfirmationService {
                 confirmationRepository.delete(confirmation);
                 confirmation.setConfirmationState(ConfirmationState.CONFIRMED);
                 confirmationRepository.save(confirmation);
-                System.out.println("Email: " + email + " has been confirmed!");
+                
+                        
 
+                System.out.println("Email: " + email + " has been confirmed!");
+                        return;
             }
             System.out.println("Email: " + email + " has already been confirmed");
+            return;
         }
         System.out.println("Email: " + email + " has not been registered");
     }
@@ -64,6 +75,18 @@ public class ConfirmationService {
             }
         }
         return false;
+    }
+
+
+    public String getTokenByEmail(String email){
+        List<Confirmation> confList = confirmationRepository.findAll();
+
+        for(Confirmation conf : confList){
+            if(conf.getEmail().equalsIgnoreCase(email)){
+                return conf.getConfirmationToken();
+            }
+        }
+        return"No Token found";
     }
 
 }

@@ -100,5 +100,31 @@ public class UserService {
 
 	// return user;
 	// }
+public void replaceUser(User user){
+
+	User replacedUser = getUserByEmail(user.getEmail());
+
+	userRepository.delete(replacedUser);
+	System.out.println("Deleted User: "+replacedUser);
+
+	userRepository.save(user);
+
+	System.out.println("Saved User: "+user);
+
+}
+
+
+
+public User getUserByEmail(String email){
+
+	List<User> allUser = userRepository.findAll();
+	for(User user: allUser){
+		if(user.getEmail().equalsIgnoreCase(email)){
+			return user;
+		}
+	}
+	return null;
+}
+
 
 }
