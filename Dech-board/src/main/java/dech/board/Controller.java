@@ -130,13 +130,22 @@ public class Controller {
         System.out.println(user.getUsername() + " wants to Login!");
         if (userService.checkIfUsernameExists(user.getUsername())) {
             if (userService.passwordIsCorrect(user.getUsername(), user.getPassword())) {
+                System.out.println("Fehler3");
+                //if(userService.getUserByUsername(user.getUsername()).getState()==State.CONFIRMED){
+
+                
                 System.out.println(user.getUsername() + " is logged in!");
 
                 token = authService.createToken(user.getUsername());
 
-                return ResponseEntity.status(HttpStatus.OK).body(token);
+                 return ResponseEntity.status(HttpStatus.OK).body(token);
+                
+           // }
+            // System.out.println("User has not been confirmed");
+            // return new ResponseEntity<String>(HttpStatus.EXPECTATION_FAILED);
             }
             System.out.println("Password is incorrect");
+            return new ResponseEntity<String>(HttpStatus.EXPECTATION_FAILED);
 
         }
 

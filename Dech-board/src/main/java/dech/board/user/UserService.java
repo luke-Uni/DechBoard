@@ -126,5 +126,16 @@ public User getUserByEmail(String email){
 	return null;
 }
 
+public User getUserByUsername(String username){
+
+	List<User> allUser = userRepository.findAll();
+	for(User user: allUser){
+		if(user.getUsername().equalsIgnoreCase(username)){
+			return user;
+		}
+	}
+	return null;
+}
+
 
 }
