@@ -64,7 +64,7 @@ public class ConversationServiceImpl {
 	public void createConversation(String username, String recipient) {
 
 		for (int i = 0; i < conversationRepository.findAll().size(); i++) {
-			System.out.println("Hallo1:- " + LocalDateTime.now());
+			System.out.println(username+ recipient);
 			if (conversationRepository.findAll().get(i).getUser1().equalsIgnoreCase(username)
 					&& conversationRepository.findAll().get(i).getUser2().equalsIgnoreCase(recipient)
 					||
@@ -75,7 +75,9 @@ public class ConversationServiceImpl {
 				// conversationRepository.findAll().get(i).setLastMessageSend(LocalDateTime.now());
 				Conversation conversationDTO = conversationRepository.findAll().get(i);
 				conversationDTO.setLastMessageSend(LocalDateTime.now());
+				System.out.println("Hallo 4: "+conversationDTO);
 				conversationRepository.delete(conversationDTO);
+				//conversationDTO.setId(getHighestConversationId()+1);
 				conversationRepository.save(conversationDTO);
 				System.out.println(conversationRepository.findAll().get(i).getLastMessageSend());
 
@@ -84,7 +86,7 @@ public class ConversationServiceImpl {
 		}
 		System.out.println("Hallo3:- " + LocalDateTime.now());
 		Conversation newConvo = new Conversation(username, recipient);
-		newConvo.setId(getHighestConversationId());
+		newConvo.setId(getHighestConversationId()+1);
 		conversationRepository.save(newConvo);
 
 	}
