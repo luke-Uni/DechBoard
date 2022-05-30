@@ -78,9 +78,9 @@ public class ConversationServiceImpl {
 				Conversation conversationDTO = conversationRepository.findAll().get(i);
 				conversationDTO.setLastMessageSend(LocalDateTime.now());
 				System.out.println("Hallo 4: " + conversationDTO);
-				conversationRepository.delete(conversationDTO);
+				// conversationRepository.delete(conversationDTO);
 				// conversationDTO.setId(getHighestConversationId()+1);
-				conversationRepository.save(conversationDTO);
+				// conversationRepository.save(conversationDTO);
 				System.out.println(conversationRepository.findAll().get(i).getLastMessageSend());
 
 				return;
