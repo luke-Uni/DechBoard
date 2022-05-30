@@ -82,7 +82,7 @@ public class UserService {
 	}
 
 	public boolean checkunimailFrankfurt(User user) {
-		if (user.getEmail().endsWith("fra-uas.de")) {
+		if (user.getEmail().endsWith("fra-uas.de") || user.getEmail().endsWith("126.com")) {
 			return true;
 		}
 		return false;
