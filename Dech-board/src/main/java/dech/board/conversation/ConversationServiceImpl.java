@@ -35,9 +35,15 @@ public class ConversationServiceImpl {
 		List<Conversation> finalList = new ArrayList<>();
 
 		for (int i = 0; i < allConvos.size(); i++) {
-			if (allConvos.get(i).getUser1().equalsIgnoreCase(username)
-					|| allConvos.get(i).getUser2().equalsIgnoreCase(username)) {
+			if (allConvos.get(i).getUser1().equalsIgnoreCase(username)) {
 				finalList.add(allConvos.get(i));
+			} else if (allConvos.get(i).getUser2().equalsIgnoreCase(username)) {
+				String userOne = allConvos.get(i).getUser1();
+				allConvos.get(i).setUser1(username);
+				allConvos.get(i).setUser2(userOne);
+				finalList.add(allConvos.get(i));
+				System.out.println("Alle User from " + username);
+
 			}
 		}
 
