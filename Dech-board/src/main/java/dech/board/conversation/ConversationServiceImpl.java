@@ -42,13 +42,13 @@ public class ConversationServiceImpl {
 					System.out.println("Usernamen vergleichen");
 
 					Conversation convo = conversationRepository.findAll().get(i);
-					conversationRepository.delete(convo);
+					// conversationRepository.delete(convo);
 					String ui = convo.getUser1();
 					convo.setUser1(username);
 					convo.setUser2(ui);
 					// conversationRepository.findAll().get(i).setUser1(username);
 					// conversationRepository.findAll().get(i).setUser2(ui);
-					conversationRepository.save(convo);
+					// conversationRepository.save(convo);
 					System.out.println("33, If schleife");
 				} else {
 					list.add(conversationRepository.findAll().get(i));
