@@ -113,7 +113,7 @@ public class Controller {
             confirmationService.createConfirmation(confirmation);
 
             senderService.sendEmail(user.getEmail(), "Confirm your E-Mail",
-                    "Hey, please confirm Your Email adress: \n https://6294ad80d3a79e16eda36347--dechboard.netlify.app/?#/confirmuser, \n Token: "
+                    "Hey, please confirm Your Email adress: \n https://6294ad80d3a79e16eda36347--dechboard.netlify.app/?#/confirmuser \n Token: "
                             + confirmationService.getTokenByEmail(user.getEmail()));
 
             return ResponseEntity.status(HttpStatus.OK).body(user);
