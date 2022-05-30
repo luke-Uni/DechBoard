@@ -50,9 +50,10 @@ public class ConversationServiceImpl {
 					// conversationRepository.findAll().get(i).setUser2(ui);
 					conversationRepository.save(convo);
 					System.out.println("33, If schleife");
+				} else {
+					list.add(conversationRepository.findAll().get(i));
 				}
 
-				list.add(conversationRepository.findAll().get(i));
 			}
 		}
 		System.out.println(list);
@@ -64,7 +65,7 @@ public class ConversationServiceImpl {
 	public void createConversation(String username, String recipient) {
 
 		for (int i = 0; i < conversationRepository.findAll().size(); i++) {
-			System.out.println(username+ recipient);
+			System.out.println(username + recipient);
 			if (conversationRepository.findAll().get(i).getUser1().equalsIgnoreCase(username)
 					&& conversationRepository.findAll().get(i).getUser2().equalsIgnoreCase(recipient)
 					||
@@ -75,9 +76,9 @@ public class ConversationServiceImpl {
 				// conversationRepository.findAll().get(i).setLastMessageSend(LocalDateTime.now());
 				Conversation conversationDTO = conversationRepository.findAll().get(i);
 				conversationDTO.setLastMessageSend(LocalDateTime.now());
-				System.out.println("Hallo 4: "+conversationDTO);
+				System.out.println("Hallo 4: " + conversationDTO);
 				conversationRepository.delete(conversationDTO);
-				//conversationDTO.setId(getHighestConversationId()+1);
+				// conversationDTO.setId(getHighestConversationId()+1);
 				conversationRepository.save(conversationDTO);
 				System.out.println(conversationRepository.findAll().get(i).getLastMessageSend());
 
@@ -86,7 +87,7 @@ public class ConversationServiceImpl {
 		}
 		System.out.println("Hallo3:- " + LocalDateTime.now());
 		Conversation newConvo = new Conversation(username, recipient);
-		newConvo.setId(getHighestConversationId()+1);
+		newConvo.setId(getHighestConversationId() + 1);
 		conversationRepository.save(newConvo);
 
 	}
