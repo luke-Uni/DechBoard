@@ -112,11 +112,12 @@ public class Controller {
             // after registration
             confirmationService.createConfirmation(confirmation);
 
-            senderService.sendEmail(user.getEmail(), "Confirm your E-Mail", "Hey, please confirm Your Email adress: \n http://localhost:8081/?#/confirmuser, \n Token: "+confirmationService.getTokenByEmail(user.getEmail()));
+            senderService.sendEmail(user.getEmail(), "Confirm your E-Mail",
+                    "Hey, please confirm Your Email adress: \n https://6294ad80d3a79e16eda36347--dechboard.netlify.app/?#/confirmuser, \n Token: "
+                            + confirmationService.getTokenByEmail(user.getEmail()));
 
             return ResponseEntity.status(HttpStatus.OK).body(user);
 
-            
         }
 
         return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(userService.validInputs(user));
@@ -131,18 +132,17 @@ public class Controller {
         if (userService.checkIfUsernameExists(user.getUsername())) {
             if (userService.passwordIsCorrect(user.getUsername(), user.getPassword())) {
                 System.out.println("Fehler3");
-                //if(userService.getUserByUsername(user.getUsername()).getState()==State.CONFIRMED){
+                if (userService.getUserByUsername(user.getUsername()).getState() == State.CONFIRMED) {
 
-                
-                System.out.println(user.getUsername() + " is logged in!");
+                    System.out.println(user.getUsername() + " is logged in!");
 
-                token = authService.createToken(user.getUsername());
+                    token = authService.createToken(user.getUsername());
 
-                 return ResponseEntity.status(HttpStatus.OK).body(token);
-                
-           // }
-            // System.out.println("User has not been confirmed");
-            // return new ResponseEntity<String>(HttpStatus.EXPECTATION_FAILED);
+                    return ResponseEntity.status(HttpStatus.OK).body(token);
+
+                }
+                System.out.println("User has not been confirmed");
+                return new ResponseEntity<String>(HttpStatus.EXPECTATION_FAILED);
             }
             System.out.println("Password is incorrect");
             return new ResponseEntity<String>(HttpStatus.EXPECTATION_FAILED);
@@ -177,14 +177,14 @@ public class Controller {
 
             if (confirmationService.confirmationExists(confDTO.getEmail())) {
                 confirmationService.ConfirmUser(confDTO.getEmail(), confDTO.getToken());
-                User user= userService.getUserByEmail(confDTO.getEmail());
+                User user = userService.getUserByEmail(confDTO.getEmail());
                 user.setState(State.CONFIRMED);
 
                 userService.replaceUser(user);
 
                 return new ResponseEntity<String>(HttpStatus.OK);
             }
-            System.out.println("Confirmation for [" +confDTO.getEmail()+ " ] does not Exist!");
+            System.out.println("Confirmation for [" + confDTO.getEmail() + " ] does not Exist!");
             return new ResponseEntity<String>(HttpStatus.EXPECTATION_FAILED);
 
         }
