@@ -157,15 +157,29 @@ public class Controller {
     @CrossOrigin
     // Mapping to get existing Users
     @RequestMapping(value = "/getUsers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getUsers() {
+    public ResponseEntity<?> getUsers(@RequestHeader String authorization) {
         // if a user wants the List of all Users
-        ArrayList<User> userList = new ArrayList<>();
-        for (int i = 0; i < userService.getUser().size(); i++) {
-            userList.add(userService.getUser().get(i));
+        if (authService.getUsernameByToKen(authorization) != null) {
+            if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization)) != null) {
+                if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
+                        .equals(authorization)) {
+                    ArrayList<User> userList = new ArrayList<>();
+                    for (int i = 0; i < userService.getUser().size(); i++) {
+                        if (userService.getUser().get(i).getUsername()
+                                .equalsIgnoreCase(authService.getUsernameByToKen(authorization))) {
 
+                        } else {
+                            userList.add(userService.getUser().get(i));
+                        }
+
+                    }
+                    return ResponseEntity.status(HttpStatus.OK).body(userList);
+                }
+                return new ResponseEntity<String>(HttpStatus.EXPECTATION_FAILED);
+            }
+            return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(userList);
-
+        return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
     }
 
     @CrossOrigin
