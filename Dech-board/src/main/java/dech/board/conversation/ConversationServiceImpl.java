@@ -50,6 +50,7 @@ public class ConversationServiceImpl {
 					// conversationRepository.findAll().get(i).setUser2(ui);
 					// conversationRepository.save(convo);
 					System.out.println("33, If schleife");
+					list.add(conversationRepository.findAll().get(i));
 				} else {
 					list.add(conversationRepository.findAll().get(i));
 				}
