@@ -62,6 +62,7 @@ public class MessageServiceImpl {
 				// Unlimited error
 				System.out.println("Ich hole mir die Messages");
 				returnMessages.get(i).setState(DirectionState.SEND);
+				returnMessages.get(i).setSend(true);
 				messages.add(returnMessages.get(i));
 			}
 
@@ -72,6 +73,7 @@ public class MessageServiceImpl {
 					&& returnMessages.get(i).getUsername().equalsIgnoreCase(recipient)) {
 				System.out.println("Drittens");
 				returnMessages.get(i).setState(DirectionState.RECEIVED);
+				returnMessages.get(i).setSend(false);
 				messages.add(returnMessages.get(i));
 
 			}

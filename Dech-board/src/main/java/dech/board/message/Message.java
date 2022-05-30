@@ -18,6 +18,7 @@ public class Message {
 	private String recipient;
 	private LocalDateTime time;
 	private DirectionState state;
+	private Boolean send;
 
 	private static int counter = 1;
 
@@ -30,6 +31,8 @@ public class Message {
 		this.recipient = recipient;
 		this.setTime(LocalDateTime.now());
 		this.setState(DirectionState.SEND);
+		this.setSend(true);
+		
 
 	}
 
@@ -59,6 +62,14 @@ public class Message {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public Boolean getSend() {
+		return send;
+	}
+
+	public void setSend(Boolean send) {
+		this.send = send;
 	}
 
 	@Override
