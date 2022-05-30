@@ -31,34 +31,51 @@ public class ConversationServiceImpl {
 	// Function to gett all conversations of one user
 	public List<Conversation> getAllConversation(String username) {
 
-		List<Conversation> list = new ArrayList<Conversation>();
+		List<Conversation> allConvos = conversationRepository.findAll();
+		List<Conversation> finalList = new ArrayList<>();
 
-		for (int i = 0; i < conversationRepository.findAll().size(); i++) {
-			System.out.println("11, If schleife");
-			if (conversationRepository.findAll().get(i).getUser1().equalsIgnoreCase(username)
-					|| conversationRepository.findAll().get(i).getUser2().equalsIgnoreCase(username)) {
-				System.out.println("22, If schleife");
-				if (conversationRepository.findAll().get(i).getUser2().equalsIgnoreCase(username)) {
-					System.out.println("Usernamen vergleichen");
-
-					Conversation convo = conversationRepository.findAll().get(i);
-					// conversationRepository.delete(convo);
-					String ui = convo.getUser1();
-					convo.setUser1(username);
-					convo.setUser2(ui);
-					// conversationRepository.findAll().get(i).setUser1(username);
-					// conversationRepository.findAll().get(i).setUser2(ui);
-					// conversationRepository.save(convo);
-					System.out.println("33, If schleife");
-					list.add(conversationRepository.findAll().get(i));
-				} else {
-					list.add(conversationRepository.findAll().get(i));
-				}
-
+		for (int i = 0; i < allConvos.size(); i++) {
+			if (allConvos.get(i).getUser1().equalsIgnoreCase(username)
+					|| allConvos.get(i).getUser2().equalsIgnoreCase(username)) {
+				finalList.add(allConvos.get(i));
 			}
 		}
-		System.out.println(list);
-		return list;
+
+		return finalList;
+
+		// List<Conversation> list = new ArrayList<Conversation>();
+
+		// for (int i = 0; i < conversationRepository.findAll().size(); i++) {
+		// System.out.println("11, If schleife");
+		// if
+		// (conversationRepository.findAll().get(i).getUser1().equalsIgnoreCase(username)
+		// ||
+		// conversationRepository.findAll().get(i).getUser2().equalsIgnoreCase(username))
+		// {
+		// System.out.println("22, If schleife");
+		// if
+		// (conversationRepository.findAll().get(i).getUser2().equalsIgnoreCase(username))
+		// {
+		// System.out.println("Usernamen vergleichen");
+
+		// Conversation convo = conversationRepository.findAll().get(i);
+		// // conversationRepository.delete(convo);
+		// String ui = convo.getUser1();
+		// convo.setUser1(username);
+		// convo.setUser2(ui);
+		// // conversationRepository.findAll().get(i).setUser1(username);
+		// // conversationRepository.findAll().get(i).setUser2(ui);
+		// // conversationRepository.save(convo);
+		// System.out.println("33, If schleife");
+		// list.add(conversationRepository.findAll().get(i));
+		// } else {
+		// list.add(conversationRepository.findAll().get(i));
+		// }
+
+		// }
+		// }
+		// System.out.println(list);
+		// return list;
 
 	}
 
