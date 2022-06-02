@@ -16,22 +16,22 @@ public class FriendshipService {
     FriendshipRepository friendshipRepository;
 
     public void createFriendshipRequest(String from, String to) {
-        if (from != null && to != null) {
+        if (from == null && to == null) {
+            System.out.println(from + " or " + to + " is null");
+        } else if (duplicateRequest(from, to)) {
+            System.out.println(from + " already sent a Friendship Request to " + to);
+        } else if (isAcceptance(from, to)) {
+            System.out.println(from + " accepted the friendship request from " + to);
+            createFriendship(from, to);
+            deleteRequest(from, to);
+        } else if (!from.equalsIgnoreCase(to)) {
+            System.out.println(from + " sent a friendship request to " + to);
 
-            if (duplicateRequest(from, to)) {
-                System.out.println(from + " already sent a Friendship Request to " + to);
-            } else if (isAcceptance(from, to)) {
-                System.out.println(from + " accepted the friendship request from " + to);
-                createFriendship(from, to);
-            } else if (!from.equalsIgnoreCase(to)) {
-                System.out.println(from + "sent a friendship request to " + to);
-
-                FriendshipRequest request = new FriendshipRequest(from, to);
-                request.setRequestId(getHighestFriendshipRequestId() + 1);
-                requestRepository.save(request);
-            }
+            FriendshipRequest request = new FriendshipRequest(from, to);
+            request.setRequestId(getHighestFriendshipRequestId() + 1);
+            requestRepository.save(request);
         }
-        // System.out.println(from + " " + to);
+
     }
 
     public void createFriendship(String from, String to) {
@@ -111,4 +111,59 @@ public class FriendshipService {
 
         return allFriendsOfUser;
     }
+
+    // After Friendship is created the request can be deleted
+    public void deleteRequest(String from, String to) {
+        if (getIdOfRequest(from, to) != -100) {
+
+            System.out.println("Delete Request from: " + from + " to: " + to);
+            requestRepository.deleteById(getIdOfRequest(from, to));
+        }
+
+    }
+
+    public int getIdOfRequest(String from, String to) {
+
+        List<FriendshipRequest> allRequests = requestRepository.findAll();
+
+        for (FriendshipRequest friendshipRequest : allRequests) {
+            if (friendshipRequest.getFrom().equalsIgnoreCase(from) && friendshipRequest.getTo().equalsIgnoreCase(to) ||
+                    friendshipRequest.getFrom().equalsIgnoreCase(to)
+                            && friendshipRequest.getTo().equalsIgnoreCase(from)) {
+
+                return friendshipRequest.getRequestId();
+
+            }
+        }
+
+        System.out.println(from + " did not send request to " + to);
+        return -100;
+    }
+
+    public int getIdOfFriendship(String user1, String user2) {
+
+        List<Friendship> allFriendships = friendshipRepository.findAll();
+
+        for (Friendship friendshipRequest : allFriendships) {
+            if (friendshipRequest.getUsername1().equalsIgnoreCase(user1)
+                    && friendshipRequest.getUsername2().equalsIgnoreCase(user2) ||
+                    friendshipRequest.getUsername1().equalsIgnoreCase(user2)
+                            && friendshipRequest.getUsername2().equalsIgnoreCase(user1)) {
+
+                return friendshipRequest.getFriendshipId();
+
+            }
+        }
+
+        System.out.println(user1 + " is not a friend of " + user2);
+        return -100;
+    }
+
+    public void deleteFriendship(String user1, String user2) {
+        if (getIdOfFriendship(user1, user2) != -100) {
+            System.out.println("Delete Friendship beetween: " + user1 + "-X-" + user2);
+            friendshipRepository.deleteById(getIdOfFriendship(user1, user2));
+        }
+    }
+
 }
