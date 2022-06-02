@@ -49,39 +49,31 @@ public class ConversationServiceImpl {
 
 		return finalList;
 
-		// List<Conversation> list = new ArrayList<Conversation>();
+	}
 
-		// for (int i = 0; i < conversationRepository.findAll().size(); i++) {
-		// System.out.println("11, If schleife");
-		// if
-		// (conversationRepository.findAll().get(i).getUser1().equalsIgnoreCase(username)
-		// ||
-		// conversationRepository.findAll().get(i).getUser2().equalsIgnoreCase(username))
-		// {
-		// System.out.println("22, If schleife");
-		// if
-		// (conversationRepository.findAll().get(i).getUser2().equalsIgnoreCase(username))
-		// {
-		// System.out.println("Usernamen vergleichen");
+	// Function to gett all conversations of one user
+	public List<Conversation> getAllConversationGroup(String username) {
 
-		// Conversation convo = conversationRepository.findAll().get(i);
-		// // conversationRepository.delete(convo);
-		// String ui = convo.getUser1();
-		// convo.setUser1(username);
-		// convo.setUser2(ui);
-		// // conversationRepository.findAll().get(i).setUser1(username);
-		// // conversationRepository.findAll().get(i).setUser2(ui);
-		// // conversationRepository.save(convo);
-		// System.out.println("33, If schleife");
-		// list.add(conversationRepository.findAll().get(i));
-		// } else {
-		// list.add(conversationRepository.findAll().get(i));
-		// }
+		List<Conversation> allConvos = conversationRepository.findAll();
+		List<Conversation> finalList = new ArrayList<>();
 
-		// }
-		// }
-		// System.out.println(list);
-		// return list;
+		for (int i = 0; i < allConvos.size(); i++) {
+			for(int x =0; x<allConvos.get(i).getConversationParticipants().size();x++){
+				String name= allConvos.get(i).getConversationParticipants().get(x);
+			if (name.equalsIgnoreCase(username)) {
+				finalList.add(allConvos.get(i));
+				if(!allConvos.get(i).getConversationParticipants().get(0).equalsIgnoreCase(username)){
+					//Set Username on index 0
+				String hallo = allConvos.get(i).getConversationParticipants().get(0);
+				allConvos.get(i).getConversationParticipants().set(0, username);
+				allConvos.get(i).getConversationParticipants().add(hallo);
+			}
+
+			} 
+		}
+		}
+
+		return finalList;
 
 	}
 
@@ -113,6 +105,57 @@ public class ConversationServiceImpl {
 		Conversation newConvo = new Conversation(username, recipient);
 		newConvo.setId(getHighestConversationId() + 1);
 		conversationRepository.save(newConvo);
+
+	}
+
+	// Function to create a new conversation between two user
+	public void createConversationGroup(String username, String recipient, List<String> participants) {
+		int duplicateParticipantCounter = 0;
+		List<Conversation> conversationList = conversationRepository.findAll();
+		List<Conversation> trueConversation = new ArrayList<Conversation>();
+		// Get all needed Conversations where there are as many participants, as above
+		for (Conversation convo : conversationList) {
+			if (convo.getConversationParticipants().size() == participants.size()) {
+				trueConversation.add(convo);
+			}
+		}
+		if (trueConversation.size() > 0) {
+			for (Conversation convo : trueConversation) {
+				List<String> nameList = convo.getConversationParticipants();
+
+				// Get all participants of one conversation
+				for (String participantName : nameList) {
+
+					// Chcek if the users from received partcipant List already are in one
+					// conversation together;
+					for (String inputParticipant : participants) {
+						if (participantName.equalsIgnoreCase(inputParticipant)) {
+							duplicateParticipantCounter++;
+						}
+
+					}
+					if (nameList.size() == duplicateParticipantCounter++) {
+
+						Conversation conversationDTOOLD = convo;
+						Conversation conversationDTO = convo;
+						conversationDTO.setLastMessageSend(LocalDateTime.now());
+
+						conversationDTO.setId(getHighestConversationId() + 1);
+						conversationRepository.delete(conversationDTOOLD);
+						conversationRepository.save(conversationDTO);
+
+						return;
+
+					} else {
+						duplicateParticipantCounter = 0;
+					}
+				}
+			}
+
+			Conversation newConvo = new Conversation(participants);
+			newConvo.setId(getHighestConversationId() + 1);
+			conversationRepository.save(newConvo);
+		}
 
 	}
 
