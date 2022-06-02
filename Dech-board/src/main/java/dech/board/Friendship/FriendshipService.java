@@ -1,5 +1,6 @@
 package dech.board.Friendship;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +16,22 @@ public class FriendshipService {
     FriendshipRepository friendshipRepository;
 
     public void createFriendshipRequest(String from, String to) {
-        if (duplicateRequest(from, to)) {
-            System.out.println(from + " already sent a Friendship Request to " + to);
-        } else if (isAcceptance(from, to)) {
-            System.out.println(from + " accepted the friendship request from " + to);
-            createFriendship(from, to);
-        } else if (!from.equalsIgnoreCase(to)) {
-            System.out.println(from + "sent a friendship request to " + to);
+        if (from != null && to != null) {
 
-            FriendshipRequest request = new FriendshipRequest(from, to);
-            request.setRequestId(getHighestFriendshipRequestId() + 1);
-            requestRepository.save(request);
+            if (duplicateRequest(from, to)) {
+                System.out.println(from + " already sent a Friendship Request to " + to);
+            } else if (isAcceptance(from, to)) {
+                System.out.println(from + " accepted the friendship request from " + to);
+                createFriendship(from, to);
+            } else if (!from.equalsIgnoreCase(to)) {
+                System.out.println(from + "sent a friendship request to " + to);
+
+                FriendshipRequest request = new FriendshipRequest(from, to);
+                request.setRequestId(getHighestFriendshipRequestId() + 1);
+                requestRepository.save(request);
+            }
         }
-        System.out.println(from + " " + to);
+        // System.out.println(from + " " + to);
     }
 
     public void createFriendship(String from, String to) {
@@ -92,5 +96,19 @@ public class FriendshipService {
         }
 
         return max;
+    }
+
+    public List<Friendship> getFriendsbyUser(String username) {
+        List<Friendship> allFriendships = friendshipRepository.findAll();
+        List<Friendship> allFriendsOfUser = new ArrayList<>();
+        for (Friendship friendship : allFriendships) {
+            System.out.println(friendship.getUsername2() + " Hä? " + username);
+            if (friendship.getUsername1().equalsIgnoreCase(username)
+                    || friendship.getUsername2().equalsIgnoreCase(username)) {
+                allFriendsOfUser.add(friendship);
+            }
+        }
+
+        return allFriendsOfUser;
     }
 }

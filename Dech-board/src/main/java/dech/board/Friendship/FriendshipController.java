@@ -31,6 +31,15 @@ public class FriendshipController {
 
         friendshipService.createFriendshipRequest(authService.getUsernameByToKen(authorization), user.getUsername());
 
-        return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<String>(HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    // Mapping to confirm a User after registration
+    @RequestMapping(value = "/friends", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> sendAllFriendsOfUser(@RequestHeader String authorization) {
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(friendshipService.getFriendsbyUser(authService.getUsernameByToKen(authorization)));
     }
 }
