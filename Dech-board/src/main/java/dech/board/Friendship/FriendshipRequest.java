@@ -10,6 +10,19 @@ public class FriendshipRequest {
     private String from;
     private String to;
 
+    public FriendshipRequest(String from, String to) {
+        this.from = from;
+        this.to = to;
+    }
+
+    public int getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(int requestId) {
+        this.requestId = requestId;
+    }
+
     public String getFrom() {
         return from;
     }

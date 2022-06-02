@@ -15,6 +15,14 @@ public class Friendship {
         this.username2 = user2;
     }
 
+    public int getFriendshipId() {
+        return friendshipId;
+    }
+
+    public void setFriendshipId(int friendshipId) {
+        this.friendshipId = friendshipId;
+    }
+
     public String getUser1() {
         return username1;
     }

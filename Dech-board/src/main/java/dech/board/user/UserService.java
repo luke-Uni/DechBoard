@@ -100,42 +100,39 @@ public class UserService {
 
 	// return user;
 	// }
-public void replaceUser(User user){
+	public void replaceUser(User user) {
 
-	User replacedUser = getUserByEmail(user.getEmail());
+		User replacedUser = getUserByEmail(user.getEmail());
 
-	userRepository.delete(replacedUser);
-	System.out.println("Deleted User: "+replacedUser);
+		userRepository.delete(replacedUser);
+		System.out.println("Deleted User: " + replacedUser);
 
-	userRepository.save(user);
+		userRepository.save(user);
 
-	System.out.println("Saved User: "+user);
+		System.out.println("Saved User: " + user);
 
-}
-
-
-
-public User getUserByEmail(String email){
-
-	List<User> allUser = userRepository.findAll();
-	for(User user: allUser){
-		if(user.getEmail().equalsIgnoreCase(email)){
-			return user;
-		}
 	}
-	return null;
-}
 
-public User getUserByUsername(String username){
+	public User getUserByEmail(String email) {
 
-	List<User> allUser = userRepository.findAll();
-	for(User user: allUser){
-		if(user.getUsername().equalsIgnoreCase(username)){
-			return user;
+		List<User> allUser = userRepository.findAll();
+		for (User user : allUser) {
+			if (user.getEmail().equalsIgnoreCase(email)) {
+				return user;
+			}
 		}
+		return null;
 	}
-	return null;
-}
 
+	public User getUserByUsername(String username) {
+
+		List<User> allUser = userRepository.findAll();
+		for (User user : allUser) {
+			if (user.getUsername().equalsIgnoreCase(username)) {
+				return user;
+			}
+		}
+		return null;
+	}
 
 }
