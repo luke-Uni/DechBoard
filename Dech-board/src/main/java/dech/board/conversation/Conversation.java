@@ -1,6 +1,7 @@
 package dech.board.conversation;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,11 +16,19 @@ public class Conversation {
 	private String user2;
 	// private int conversationId;
 	private LocalDateTime lastMessageSend;
+	private List<String> conversationParticipants;
 
 	public Conversation(String user1, String user2) {
 		this.id = counter++;
 		this.user1 = user1;
 		this.user2 = user2;
+		this.lastMessageSend = LocalDateTime.now();
+
+	}
+
+	public Conversation(List<String> participants) {
+		this.id = counter++;
+		this.conversationParticipants=participants;
 		this.lastMessageSend = LocalDateTime.now();
 
 	}
@@ -67,6 +76,17 @@ public class Conversation {
 	public void setId(int id) {
 		this.id = id;
 	}
+
+
+	public List<String> getConversationParticipants() {
+		return conversationParticipants;
+	}
+
+	public void setConversationParticipants(List<String> newParticipants) {
+		this.conversationParticipants = newParticipants;
+	}
+
+
 
 	@Override
 	public String toString() {
