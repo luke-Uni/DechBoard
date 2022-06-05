@@ -26,11 +26,15 @@ public class FriendshipController {
 
     @CrossOrigin
     // Mapping to add friend and accept friend
-    @RequestMapping(value = "/friendship/request", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> confirmUser(@RequestHeader String authorization, @RequestBody User user) {
+    @RequestMapping(value = "/friendship/request", method = RequestMethod.POST)
+    public ResponseEntity<?> confirmUser(@RequestHeader String authorization, @RequestBody String username) {
+        // workaround because the String username always get a "=" character added on
+        // the way to the server
+        username = username.substring(0, username.length() - 1);
+
         if (authService.getUsernameByToKen(authorization) != null) {
             friendshipService.createFriendshipRequest(authService.getUsernameByToKen(authorization),
-                    user.getUsername());
+                    username);
 
             return new ResponseEntity<String>(HttpStatus.OK);
         }
@@ -42,6 +46,7 @@ public class FriendshipController {
     // Mapping to get friends of user
     @RequestMapping(value = "/friends", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> sendAllFriendsOfUser(@RequestHeader String authorization) {
+        System.out.println("I am in the get Firends Controller");
         if (authService.getUsernameByToKen(authorization) != null) {
 
             return ResponseEntity.status(HttpStatus.OK)

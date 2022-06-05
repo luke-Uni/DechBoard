@@ -1,7 +1,9 @@
 package dech.board.Friendship;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "FriendshipRequest")
 public class FriendshipRequest {
 
     @Id
