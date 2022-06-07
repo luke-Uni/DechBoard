@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dech.board.conversation.Conversation;
+
 import dech.board.conversation.ConversationServiceImpl;
 
 @Service
