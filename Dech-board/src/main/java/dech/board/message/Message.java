@@ -1,6 +1,7 @@
 package dech.board.message;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
@@ -20,15 +21,35 @@ public class Message {
 	private DirectionState state;
 	private Boolean send;
 
+	//For Groupchats, later all users will be saved in here
+	private List<String> recipients;
+	//So it can be assigned to one certain conversation
+	private int conversationID;
+
 	private static int counter = 1;
 
+	// @JsonCreator
+	// public Message(String username, String content, String recipient) {
+
+	// 	this.id = ++counter;
+	// 	this.username = username;
+	// 	this.content = content;
+	// 	this.recipient = recipient;
+	// 	this.setTime(LocalDateTime.now());
+	// 	this.setState(DirectionState.SEND);
+	// 	this.setSend(true);
+		
+
+	// }
+
 	@JsonCreator
-	public Message(String username, String content, String recipient) {
+	//For Groupchats
+	public Message(String username, List<String>recipients,String content) {
 
 		this.id = ++counter;
 		this.username = username;
 		this.content = content;
-		this.recipient = recipient;
+		this.recipients=recipients;
 		this.setTime(LocalDateTime.now());
 		this.setState(DirectionState.SEND);
 		this.setSend(true);
@@ -74,7 +95,7 @@ public class Message {
 
 	@Override
 	public String toString() {
-		return "Message [username=" + username + ", content=" + content + ", recipient=" + recipient + "]";
+		return "Message [username=" + username + ", content=" + content + ", recipients=" + recipients +", ConversationId: "+conversationID +"]";
 	}
 
 	public String getRecipient() {
@@ -99,6 +120,23 @@ public class Message {
 
 	public void setState(DirectionState state) {
 		this.state = state;
+	}
+
+	public int getConversationId() {
+		return conversationID;
+	}
+
+	public void setConversationId(int conversationID) {
+		this.conversationID = conversationID;
+	}
+
+	public List<String> getRecipientList() {
+		return recipients;
+	}
+
+	
+	public void setRecipientList(List<String> newRecipients) {
+		this.recipients = newRecipients;
 	}
 
 }

@@ -44,8 +44,9 @@ public class ConversationController {
 						.equals((authorization))) {
 
 					System.out.println(authService.getUsernameByToKen(authorization));
-					List<Conversation> conversations = conversationService
-							.getAllConversation(authService.getUsernameByToKen(authorization));
+					// List<Conversation> conversations = conversationService
+					// 		.getAllConversation(authService.getUsernameByToKen(authorization));
+					List<Conversation> conversations = conversationService.getAllConversationGroup(authService.getUsernameByToKen(authorization));
 
 					System.out.println(conversations);
 
