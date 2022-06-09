@@ -28,94 +28,46 @@ public class MessageController {
 	@Autowired
 	AuthorizationService authService = new AuthorizationService();
 
-	// @PostMapping("/addMessage")
-	// public String saveMessage(@RequestBody Message message) {
-
-	// System.out.println(message);
-	// messageRepository.save(message);
-
-	// return "Added a Message";
-	// }
-
-	// @GetMapping("/getMessages")
-	// public List<Message> getMessages(@RequestBody Message message) {
-
-	// return messageRepository.findAll();
-
-	// }
-
-	// @CrossOrigin
-	// // Mapping to create a new post
-	// @RequestMapping(value = "/message/create", method = RequestMethod.POST,
-	// consumes = MediaType.APPLICATION_JSON_VALUE)
-	// public ResponseEntity<?> addPost(@RequestBody Message message, @RequestHeader
-	// String authorization) {
-	// // System.out.println(authorization + "AUTH");
-	// // System.out.println(authService.getUsernameByToKen(authorization));
-	// message.setUsername(authService.getUsernameByToKen(authorization));
-
-	// if (authService.getUsernameByToKen(authorization) != null) {
-	// System.out.println(authService.getUsernameByToKen(authorization) + " created
-	// a message");
-	// if
-	// (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
-	// != null) {
-	// if
-	// (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
-	// .equals((authorization))) {
-	// // post.setImportant(true);
-	// conversationService.createConversation(authService.getUsernameByToKen(authorization),
-	// message.getRecipient());
-
-	// System.out.println(message);
-	// messageServcice.createMessage(message);
-
-	// return ResponseEntity.status(HttpStatus.OK).body("Post successfully created"
-	// + message);
-	// }
-	// return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
-	// }
-	// return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
-	// }
-
-	// return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
-
-	// }
-
 	@CrossOrigin
 	// Mapping to create a new post
 	@RequestMapping(value = "/message/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> addMessageGroup(@RequestBody Message message, @RequestHeader String authorization) {
-		// System.out.println(authorization + "AUTH");
-		// System.out.println(authService.getUsernameByToKen(authorization));
-		System.out.println("Hallo:  "+ message );
+
 		message.setUsername(authService.getUsernameByToKen(authorization));
-		System.out.println("Hallo2:  "+ message );
+
 		if (authService.getUsernameByToKen(authorization) != null) {
 			System.out.println(authService.getUsernameByToKen(authorization) + " created a message");
 			if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization)) != null) {
 				if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
 						.equals((authorization))) {
-					// post.setImportant(true);
-					conversationService.createConversationGroup(authService.getUsernameByToKen(authorization),
+
+					int index = message.getRecipientList().indexOf(authService.getUsernameByToKen(authorization));
+					if (index > 0) {
+						message.getRecipientList().remove(index);
+						System.out.println("Hallo4:  " + message);
+					}
+
+					index = message.getRecipientList().indexOf(authService.getUsernameByToKen(authorization));
+					if (index > 0) {
+						message.getRecipientList().remove(index);
+						System.out.println("Hallo4:  " + message);
+					}
+
+					conversationService.testCreateConversation(authService.getUsernameByToKen(authorization),
 							message.getRecipientList());
-							System.out.println("Hallo3:  "+ message );
-							
-					System.out.println(message);
-					//conversationService.createConversationGroup(authService.getUsernameByToKen(authorization), message.getRecipientList());
-					
-					int index =message.getRecipientList().indexOf(authService.getUsernameByToKen(authorization));
-							if(index>0){
-								message.getRecipientList().remove(index);
-								System.out.println("Hallo4:  "+ message );
-							}
-					//message.setConversationId(conversationService.getConversationIdByUsernames(message.getRecipientList(), authService.getUsernameByToKen(authorization)));
-					//message.setConversationId(conversationService.getConversationID(conversationService.getConversationIdByUsernames(message.getRecipientList(), authService.getUsernameByToKen(authorization))));
-					message.setConversationId(conversationService.getConversationID(message.getRecipientList(), authService.getUsernameByToKen(authorization)));
-					System.out.println("Hallo5:  "+ message );
+
+					System.out.println("New Message created: " + message);
+
+					message.setConversationId(conversationService.getConversationID(message.getRecipientList(),
+							authService.getUsernameByToKen(authorization)));
+
+					index = message.getRecipientList().indexOf(authService.getUsernameByToKen(authorization));
+					if (index > 0) {
+						message.getRecipientList().remove(index);
+
+					}
 					messageServcice.createMessageGroup(message);
-					System.out.println("Hallo7:  "+ message );
-					
+
 					return ResponseEntity.status(HttpStatus.OK).body("Post successfully created"
 							+ message);
 				}
@@ -127,46 +79,34 @@ public class MessageController {
 		return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
 
 	}
-
 
 	@CrossOrigin
 	// Mapping to create a new post
 	@RequestMapping(value = "/message/{conversationId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> addMessageGroupByID(@RequestBody Message message, @RequestHeader String authorization, @PathVariable int conversationId) {
+	public ResponseEntity<?> addMessageGroupByID(@RequestBody Message message, @RequestHeader String authorization,
+			@PathVariable int conversationId) {
 		System.out.println(message);
-		// System.out.println(authorization + "AUTH");
-		// System.out.println(authService.getUsernameByToKen(authorization));
-	//	System.out.println("Hallo:  "+ message );
+
 		message.setUsername(authService.getUsernameByToKen(authorization));
-		//System.out.println("Hallo2:  "+ message );
+		// System.out.println("Hallo2: "+ message );
 		if (authService.getUsernameByToKen(authorization) != null) {
 			System.out.println(authService.getUsernameByToKen(authorization) + " created a message");
 			if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization)) != null) {
 				if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
 						.equals((authorization))) {
-					// post.setImportant(true);
-					//conversationService.createConversationGroup(authService.getUsernameByToKen(authorization),
-						//	message.getRecipientList());
-							//System.out.println("Hallo3:  "+ message );
-							
-					//System.out.println(message);
-					//conversationService.createConversationGroup(authService.getUsernameByToKen(authorization), message.getRecipientList());
-					message.setRecipientList(conversationService.getConversationById(conversationId).getConversationParticipants());
+
+					message.setRecipientList(
+							conversationService.getConversationById(conversationId).getConversationParticipants());
 					message.setConversationId(conversationId);
 
-					int index =message.getRecipientList().indexOf(authService.getUsernameByToKen(authorization));
-							if(index>0){
-								message.getRecipientList().remove(index);
-								System.out.println("Hallo4:  "+ message );
-							}
-					//message.setConversationId(conversationService.getConversationIdByUsernames(message.getRecipientList(), authService.getUsernameByToKen(authorization)));
-					//message.setConversationId(conversationService.getConversationID(conversationService.getConversationIdByUsernames(message.getRecipientList(), authService.getUsernameByToKen(authorization))));
-					// message.setConversationId(conversationId);
-					// message.setRecipientList(conversationService.getConversationById(conversationId).getConversationParticipants());
-					//System.out.println("Hallo5:  "+ message );
+					int index = message.getRecipientList().indexOf(authService.getUsernameByToKen(authorization));
+					if (index > 0) {
+						message.getRecipientList().remove(index);
+						System.out.println("Hallo4:  " + message);
+					}
+
 					messageServcice.createMessageGroup(message);
-					//System.out.println("Hallo7:  "+ message );
-					
+
 					return ResponseEntity.status(HttpStatus.OK).body("Post successfully created"
 							+ message);
 				}
@@ -178,12 +118,6 @@ public class MessageController {
 		return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
 
 	}
-
-
-
-
-
-
 
 	@CrossOrigin
 	// Mapping to
