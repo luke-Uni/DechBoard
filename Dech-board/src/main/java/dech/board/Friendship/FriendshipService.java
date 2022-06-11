@@ -6,9 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import dech.board.user.User;
+import dech.board.user.UserService;
+
 @Service
 public class FriendshipService {
-
+    @Autowired
+    UserService userService;
     @Autowired
     FriendshipRequestRepository requestRepository;
 
@@ -53,7 +57,19 @@ public class FriendshipService {
 
         return false;
     }
-
+    // public ArrayList<User> friendsObject(String username) {
+    //     List<Friendship> nameList= getFriendsbyUser(username);
+    //     ArrayList<User> objectFriends= new ArrayList<> ();
+    //     for(int i=0; i<nameList.size(); i++){
+    //         System.out.println(nameList.get(i).getUsername1()+" username 2 :"+nameList.get(i).getUsername2());
+        
+    //     if(!nameList.get(i).getUsername1().equalsIgnoreCase(username)){
+    //     objectFriends.add(userService.getUserByUsername(nameList.get(i).getUsername1()))  ;}
+    //     else if(!nameList.get(i).getUsername2().equalsIgnoreCase(username)){
+    //         objectFriends.add(userService.getUserByUsername(nameList.get(i).getUsername2())) ;
+    //     }}
+    //     return objectFriends;
+    // }
     // Check if request is actually a accept of a request
     public boolean isAcceptance(String from, String to) {
 
