@@ -1,5 +1,8 @@
 package dech.board.Friendship;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dech.board.Authorization.AuthorizationService;
 import dech.board.user.User;
+import dech.board.user.UserService;
 
 @RestController
 public class FriendshipController {
@@ -23,7 +27,8 @@ public class FriendshipController {
 
     @Autowired
     AuthorizationService authService;
-
+    @Autowired
+    UserService userService;
     @CrossOrigin
     // Mapping to add friend and accept friend
     @RequestMapping(value = "/friendship/request", method = RequestMethod.POST)
@@ -56,6 +61,28 @@ public class FriendshipController {
                 .body("Authorization Token is " + null);
     }
 
+    @CrossOrigin
+    // Mapping to get friends of user
+    @RequestMapping(value = "/friendsobject", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> friendsObject(@RequestHeader String authorization) {
+        System.out.println("I am in the get Firends Controller");
+        if (authService.getUsernameByToKen(authorization) != null) {
+            ArrayList<User> objectFriends= new ArrayList<> ();
+            List<Friendship> nameList= friendshipService.getFriendsbyUser(authService.getUsernameByToKen(authorization));
+            for(int i=0; i<nameList.size(); i++){
+                System.out.println(nameList.get(i).getUsername1()+" username 2 :"+nameList.get(i).getUsername2());
+            
+            if(!nameList.get(i).getUsername1().equalsIgnoreCase(authService.getUsernameByToKen(authorization))){
+            objectFriends.add(userService.getUserByUsername(nameList.get(i).getUsername1()))  ;}
+            else if(!nameList.get(i).getUsername2().equalsIgnoreCase(authService.getUsernameByToKen(authorization))){
+                objectFriends.add(userService.getUserByUsername(nameList.get(i).getUsername2())) ;
+            }}
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(objectFriends);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body("Authorization Token is " + null);
+    }
     @CrossOrigin
 
     @RequestMapping(value = "/friends/{username}", method = RequestMethod.DELETE)
