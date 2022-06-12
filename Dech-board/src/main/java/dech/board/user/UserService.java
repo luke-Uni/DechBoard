@@ -32,6 +32,7 @@ public class UserService {
 
 		if (checkunimailFrankfurt(user)) {
 			user.setId(getHighestUserId() + 1);
+			getCountryFromEmail(user);
 			user.setState(State.UNCONFIRMED);
 			userRepository.save(user);
 			System.out.println("User " + user.getUsername() + " created!");
@@ -79,6 +80,16 @@ public class UserService {
 			}
 		}
 		return false;
+	}
+
+	public void getCountryFromEmail(User user) {
+
+		if (user.getEmail().endsWith("fra-uas.de")) {
+			user.setCountry("Germany");
+		} else if (user.getEmail().endsWith("126.com")) {
+			user.setCountry("China");
+		}
+
 	}
 
 	public boolean checkunimailFrankfurt(User user) {
