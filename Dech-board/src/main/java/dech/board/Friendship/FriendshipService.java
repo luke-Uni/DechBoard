@@ -28,6 +28,8 @@ public class FriendshipService {
             System.out.println(from + " accepted the friendship request from " + to);
             createFriendship(from, to);
             deleteRequest(from, to);
+        } else if (areFriends(from, to)) {
+            System.out.println(from + " and " + to + " are already friends");
         } else if (!from.equalsIgnoreCase(to)) {
             System.out.println(from + " sent a friendship request to " + to);
 
@@ -58,17 +60,20 @@ public class FriendshipService {
         return false;
     }
     // public ArrayList<User> friendsObject(String username) {
-    //     List<Friendship> nameList= getFriendsbyUser(username);
-    //     ArrayList<User> objectFriends= new ArrayList<> ();
-    //     for(int i=0; i<nameList.size(); i++){
-    //         System.out.println(nameList.get(i).getUsername1()+" username 2 :"+nameList.get(i).getUsername2());
-        
-    //     if(!nameList.get(i).getUsername1().equalsIgnoreCase(username)){
-    //     objectFriends.add(userService.getUserByUsername(nameList.get(i).getUsername1()))  ;}
-    //     else if(!nameList.get(i).getUsername2().equalsIgnoreCase(username)){
-    //         objectFriends.add(userService.getUserByUsername(nameList.get(i).getUsername2())) ;
-    //     }}
-    //     return objectFriends;
+    // List<Friendship> nameList= getFriendsbyUser(username);
+    // ArrayList<User> objectFriends= new ArrayList<> ();
+    // for(int i=0; i<nameList.size(); i++){
+    // System.out.println(nameList.get(i).getUsername1()+" username 2
+    // :"+nameList.get(i).getUsername2());
+
+    // if(!nameList.get(i).getUsername1().equalsIgnoreCase(username)){
+    // objectFriends.add(userService.getUserByUsername(nameList.get(i).getUsername1()))
+    // ;}
+    // else if(!nameList.get(i).getUsername2().equalsIgnoreCase(username)){
+    // objectFriends.add(userService.getUserByUsername(nameList.get(i).getUsername2()))
+    // ;
+    // }}
+    // return objectFriends;
     // }
     // Check if request is actually a accept of a request
     public boolean isAcceptance(String from, String to) {
@@ -180,6 +185,20 @@ public class FriendshipService {
             System.out.println("Delete Friendship beetween: " + user1 + "-X-" + user2);
             friendshipRepository.deleteById(getIdOfFriendship(user1, user2));
         }
+    }
+
+    public boolean areFriends(String user1, String user2) {
+
+        List<Friendship> allFriends = friendshipRepository.findAll();
+
+        for (Friendship friendship : allFriends) {
+            if (user1.equals(friendship.getUsername1()) && user2.equals(friendship.getUsername2()) ||
+                    user1.equals(friendship.getUsername2()) && user2.equals(friendship.getUsername1())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

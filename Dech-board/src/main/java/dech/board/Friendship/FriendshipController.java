@@ -29,6 +29,7 @@ public class FriendshipController {
     AuthorizationService authService;
     @Autowired
     UserService userService;
+
     @CrossOrigin
     // Mapping to add friend and accept friend
     @RequestMapping(value = "/friendship/request", method = RequestMethod.POST)
@@ -67,24 +68,27 @@ public class FriendshipController {
     public ResponseEntity<?> friendsObject(@RequestHeader String authorization) {
         System.out.println("I am in the get Firends Controller");
         if (authService.getUsernameByToKen(authorization) != null) {
-            ArrayList<User> objectFriends= new ArrayList<> ();
-            List<Friendship> nameList= friendshipService.getFriendsbyUser(authService.getUsernameByToKen(authorization));
-            for(int i=0; i<nameList.size(); i++){
-                System.out.println(nameList.get(i).getUsername1()+" username 2 :"+nameList.get(i).getUsername2());
-            
-            if(!nameList.get(i).getUsername1().equalsIgnoreCase(authService.getUsernameByToKen(authorization))){
-            objectFriends.add(userService.getUserByUsername(nameList.get(i).getUsername1()))  ;}
-            else if(!nameList.get(i).getUsername2().equalsIgnoreCase(authService.getUsernameByToKen(authorization))){
-                objectFriends.add(userService.getUserByUsername(nameList.get(i).getUsername2())) ;
-            }}
+            ArrayList<User> objectFriends = new ArrayList<>();
+            List<Friendship> nameList = friendshipService
+                    .getFriendsbyUser(authService.getUsernameByToKen(authorization));
+            for (int i = 0; i < nameList.size(); i++) {
+                System.out.println(nameList.get(i).getUsername1() + " username 2 :" + nameList.get(i).getUsername2());
+
+                if (!nameList.get(i).getUsername1().equalsIgnoreCase(authService.getUsernameByToKen(authorization))) {
+                    objectFriends.add(userService.getUserByUsername(nameList.get(i).getUsername1()));
+                } else if (!nameList.get(i).getUsername2()
+                        .equalsIgnoreCase(authService.getUsernameByToKen(authorization))) {
+                    objectFriends.add(userService.getUserByUsername(nameList.get(i).getUsername2()));
+                }
+            }
             return ResponseEntity.status(HttpStatus.OK)
                     .body(objectFriends);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body("Authorization Token is " + null);
     }
-    @CrossOrigin
 
+    @CrossOrigin
     @RequestMapping(value = "/friends/{username}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteASpecificFriend(@RequestHeader String authorization, @PathVariable String username) {
 
