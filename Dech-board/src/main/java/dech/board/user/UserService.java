@@ -66,7 +66,6 @@ public class UserService {
 		}
 		return false;
 	}
-
 	public boolean passwordIsCorrect(String username, String password) {
 
 		List<User> userList = userRepository.findAll();

@@ -181,7 +181,67 @@ public class Controller {
         }
         return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
     }
+    @CrossOrigin
+    // Mapping to get existing Users
+    @RequestMapping(value = "/getGermanUsers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getGermanUsers(@RequestHeader String authorization) {
+        // if a user wants the List of all Users
+        if (authService.getUsernameByToKen(authorization) != null) {
+            if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization)) != null) {
+                if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
+                        .equals(authorization)) {
+                    ArrayList<User> userList = new ArrayList<>();
+                    for (int i = 0; i < userService.getUser().size(); i++) {
+                        if (userService.getUser().get(i).getUsername()
+                                .equalsIgnoreCase(authService.getUsernameByToKen(authorization))) {
 
+                        } else {
+                            if(userService.getUser().get(i).getEmail().contains("fra-uas.de")){
+                                userList.add(userService.getUser().get(i));
+                            }
+                            
+                        }
+
+                    }
+                    return ResponseEntity.status(HttpStatus.OK).body(userList);
+                }
+                return new ResponseEntity<String>(HttpStatus.EXPECTATION_FAILED);
+            }
+            return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+    }
+
+    @CrossOrigin
+    // Mapping to get existing Users
+    @RequestMapping(value = "/getChineseUsers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getChineseUsers(@RequestHeader String authorization) {
+        // if a user wants the List of all Users
+        if (authService.getUsernameByToKen(authorization) != null) {
+            if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization)) != null) {
+                if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
+                        .equals(authorization)) {
+                    ArrayList<User> userList = new ArrayList<>();
+                    for (int i = 0; i < userService.getUser().size(); i++) {
+                        if (userService.getUser().get(i).getUsername()
+                                .equalsIgnoreCase(authService.getUsernameByToKen(authorization))) {
+
+                        } else {
+                            if(!userService.getUser().get(i).getEmail().contains("fra-uas.de")){
+                                userList.add(userService.getUser().get(i));
+                            }
+                            
+                        }
+
+                    }
+                    return ResponseEntity.status(HttpStatus.OK).body(userList);
+                }
+                return new ResponseEntity<String>(HttpStatus.EXPECTATION_FAILED);
+            }
+            return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+    }
     @CrossOrigin
     // Mapping to confirm a User after registration
     @RequestMapping(value = "/confirmuser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
