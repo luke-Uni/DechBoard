@@ -66,10 +66,13 @@ public class MessageController {
 						message.getRecipientList().remove(index);
 
 					}
+					if(message.getContent().length()>0){
 					messageServcice.createMessageGroup(message);
 
 					return ResponseEntity.status(HttpStatus.OK).body("Post successfully created"
 							+ message);
+					}
+					return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("No Message");
 				}
 				return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
 			}
@@ -104,12 +107,15 @@ public class MessageController {
 						message.getRecipientList().remove(index);
 						System.out.println("Hallo4:  " + message);
 					}
+					if(message.getContent().length()>1){
 
 					messageServcice.createMessageGroup(message);
-
-					return ResponseEntity.status(HttpStatus.OK).body("Post successfully created"
+					return ResponseEntity.status(HttpStatus.OK).body("Message successfully created"
 							+ message);
 				}
+
+					return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("No Message");
+				}																					
 				return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
 			}
 			return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
