@@ -27,6 +27,7 @@ public class FriendshipController {
 
     @Autowired
     AuthorizationService authService;
+
     @Autowired
     UserService userService;
 
