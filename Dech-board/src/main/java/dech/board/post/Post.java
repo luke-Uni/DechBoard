@@ -2,6 +2,7 @@ package dech.board.post;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,6 +18,7 @@ public class Post {
 	private String username;
 	private String title;
 	private String content;
+	private Binary image;
 	private int upVotes;
 	private int downVotes;
 	private Boolean important;
@@ -49,6 +51,14 @@ public class Post {
 
 	public int getPostId() {
 		return postId;
+	}
+
+	public Binary getImage() {
+		return image;
+	}
+
+	public void setImage(Binary image) {
+		this.image = image;
 	}
 
 	public void setPostId(int postId) {

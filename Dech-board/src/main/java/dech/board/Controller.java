@@ -1,19 +1,30 @@
 package dech.board;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import dech.board.Authorization.AuthorizationService;
 import dech.board.Authorization.Token;
@@ -65,7 +76,7 @@ public class Controller {
 
                     postService.addPost(post);
                     System.out.println(post);
-                    return ResponseEntity.status(HttpStatus.OK).body(postService.getPosts());
+                    return ResponseEntity.status(HttpStatus.CREATED).body(postService.getPosts());
                 }
                 return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
             }
@@ -73,6 +84,30 @@ public class Controller {
         }
         // System.out.println("Hallo3");
         return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+
+    }
+
+    @CrossOrigin
+    // Mapping to create add Image to Post
+    @RequestMapping(value = "/posts/image", method = RequestMethod.POST)
+    public String addPicture(@RequestHeader String postId, @RequestHeader String authorization,
+            @RequestParam("image") MultipartFile multipartFile) throws IOException, InterruptedException {
+
+        if (authService.getUsernameByToKen(authorization) != null) {
+            if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization)) != null) {
+                if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
+                        .equals((authorization))) {
+
+                    postService.addImgToPost(multipartFile, postId);
+                    return String.format("File is in Controller ", multipartFile.getOriginalFilename());
+                    // return new ResponseEntity<String>(HttpStatus.CREATED);
+                }
+                // return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+            }
+            // return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+        }
+
+        return "Fail";
 
     }
 
@@ -181,6 +216,14 @@ public class Controller {
         }
         return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
     }
+
+    @CrossOrigin
+    @RequestMapping(value = "/image/{postId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getPicture(@PathVariable String postId) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(postService.getImagebyTitle(postId));
+    }
+
     @CrossOrigin
     // Mapping to get existing Users
     @RequestMapping(value = "/getGermanUsers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -196,10 +239,10 @@ public class Controller {
                                 .equalsIgnoreCase(authService.getUsernameByToKen(authorization))) {
 
                         } else {
-                            if(userService.getUser().get(i).getEmail().contains("fra-uas.de")){
+                            if (userService.getUser().get(i).getEmail().contains("fra-uas.de")) {
                                 userList.add(userService.getUser().get(i));
                             }
-                            
+
                         }
 
                     }
@@ -227,10 +270,10 @@ public class Controller {
                                 .equalsIgnoreCase(authService.getUsernameByToKen(authorization))) {
 
                         } else {
-                            if(!userService.getUser().get(i).getEmail().contains("fra-uas.de")){
+                            if (!userService.getUser().get(i).getEmail().contains("fra-uas.de")) {
                                 userList.add(userService.getUser().get(i));
                             }
-                            
+
                         }
 
                     }
@@ -242,6 +285,7 @@ public class Controller {
         }
         return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
     }
+
     @CrossOrigin
     // Mapping to confirm a User after registration
     @RequestMapping(value = "/confirmuser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
