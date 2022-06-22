@@ -3,6 +3,7 @@ package dech.board;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,7 +28,7 @@ import dech.board.confirmation.ConfirmationDTO;
 import dech.board.confirmation.ConfirmationService;
 import dech.board.confirmation.EmailSenderService;
 import dech.board.post.Post;
-import dech.board.post.PostServiceImpl;
+import dech.board.post.PostService;
 import dech.board.user.State;
 import dech.board.user.User;
 import dech.board.user.UserService;
@@ -37,7 +38,7 @@ import dech.board.user.UserService;
 public class Controller {
 
     @Autowired
-    PostServiceImpl postService = new PostServiceImpl();
+    PostService postService = new PostService();
 
     @Autowired
     UserService userService = new UserService();
@@ -215,7 +216,10 @@ public class Controller {
     @RequestMapping(value = "/image/{postId}", method = RequestMethod.GET)
     public ResponseEntity<?> getPicture(@PathVariable String postId) {
 
-        return ResponseEntity.status(HttpStatus.OK).body(postService.getImagebyTitle(postId));
+        System.out.println("I am in the image Controller!");
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(Base64.getEncoder().encodeToString(postService.getImagebyTitle(postId).getData()));
     }
 
     @CrossOrigin
