@@ -1,10 +1,10 @@
-package dech.board.Friendship;
+package dech.board.Contacts;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "FriendshipRequest")
-public class FriendshipRequest {
+@Document(collection = "ContactRequest")
+public class ContactRequest {
 
     @Id
     private int requestId;
@@ -12,7 +12,7 @@ public class FriendshipRequest {
     private String from;
     private String to;
 
-    public FriendshipRequest(String from, String to) {
+    public ContactRequest(String from, String to) {
         this.from = from;
         this.to = to;
     }

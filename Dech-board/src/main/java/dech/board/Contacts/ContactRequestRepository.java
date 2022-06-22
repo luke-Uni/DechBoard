@@ -1,9 +1,9 @@
-package dech.board.Friendship;
+package dech.board.Contacts;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FriendshipRequestRepository extends MongoRepository<FriendshipRequest, Integer> {
+public interface ContactRequestRepository extends MongoRepository<ContactRequest, Integer> {
 
 }
