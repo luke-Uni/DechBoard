@@ -1,4 +1,4 @@
-package dech.board.Friendship;
+package dech.board.Contacts;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +20,10 @@ import dech.board.user.User;
 import dech.board.user.UserService;
 
 @RestController
-public class FriendshipController {
+public class Contact {
 
     @Autowired
-    FriendshipService friendshipService;
+    ContactService friendshipService;
 
     @Autowired
     AuthorizationService authService;
@@ -33,7 +33,7 @@ public class FriendshipController {
 
     @CrossOrigin
     // Mapping to add friend and accept friend
-    @RequestMapping(value = "/friendship/request", method = RequestMethod.POST)
+    @RequestMapping(value = "/contact/request", method = RequestMethod.POST)
     public ResponseEntity<?> confirmUser(@RequestHeader String authorization, @RequestBody String username) {
         // workaround because the String username always get a "=" character added on
         // the way to the server
@@ -51,7 +51,7 @@ public class FriendshipController {
 
     @CrossOrigin
     // Mapping to get friends of user
-    @RequestMapping(value = "/friends", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/contact", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> sendAllFriendsOfUser(@RequestHeader String authorization) {
         System.out.println("I am in the get Firends Controller");
         if (authService.getUsernameByToKen(authorization) != null) {
@@ -70,7 +70,7 @@ public class FriendshipController {
         System.out.println("I am in the get Firends Controller");
         if (authService.getUsernameByToKen(authorization) != null) {
             ArrayList<User> objectFriends = new ArrayList<>();
-            List<Friendship> nameList = friendshipService
+            List<Contacts> nameList = friendshipService
                     .getFriendsbyUser(authService.getUsernameByToKen(authorization));
             for (int i = 0; i < nameList.size(); i++) {
                 System.out.println(nameList.get(i).getUsername1() + " username 2 :" + nameList.get(i).getUsername2());
@@ -90,7 +90,7 @@ public class FriendshipController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/friends/{username}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/contact/{username}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteASpecificFriend(@RequestHeader String authorization, @PathVariable String username) {
 
         friendshipService.deleteFriendship(authService.getUsernameByToKen(authorization), username);

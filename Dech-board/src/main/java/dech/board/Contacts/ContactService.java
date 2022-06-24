@@ -1,4 +1,4 @@
-package dech.board.Friendship;
+package dech.board.Contacts;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,26 +6,27 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dech.board.user.User;
 import dech.board.user.UserService;
 
 @Service
-public class FriendshipService {
-    @Autowired
-    UserService userService;
-    @Autowired
-    FriendshipRequestRepository requestRepository;
+public class ContactService {
 
     @Autowired
-    FriendshipRepository friendshipRepository;
+    UserService userService;
+
+    @Autowired
+    ContactRequestRepository requestRepository;
+
+    @Autowired
+    ContactRepository contactRepository;
 
     public void createFriendshipRequest(String from, String to) {
         if (from == null && to == null) {
             System.out.println(from + " or " + to + " is null");
         } else if (duplicateRequest(from, to)) {
-            System.out.println(from + " already sent a Friendship Request to " + to);
+            System.out.println(from + " already sent a Contact Request to " + to);
         } else if (isAcceptance(from, to)) {
-            System.out.println(from + " accepted the friendship request from " + to);
+            System.out.println(from + " accepted the Contact request from " + to);
             createFriendship(from, to);
             deleteRequest(from, to);
         } else if (areFriends(from, to)) {
@@ -33,7 +34,7 @@ public class FriendshipService {
         } else if (!from.equalsIgnoreCase(to)) {
             System.out.println(from + " sent a friendship request to " + to);
 
-            FriendshipRequest request = new FriendshipRequest(from, to);
+            ContactRequest request = new ContactRequest(from, to);
             request.setRequestId(getHighestFriendshipRequestId() + 1);
             requestRepository.save(request);
         }
@@ -41,17 +42,17 @@ public class FriendshipService {
     }
 
     public void createFriendship(String from, String to) {
-        Friendship friendship = new Friendship(from, to);
-        friendship.setFriendshipId(getHighestFriendshipId() + 1);
-        friendshipRepository.save(friendship);
+        Contacts friendship = new Contacts(from, to);
+        friendship.setContactId(getHighestFriendshipId() + 1);
+        contactRepository.save(friendship);
     }
 
     // check if request already exists
     public boolean duplicateRequest(String from, String to) {
 
-        List<FriendshipRequest> allRequests = requestRepository.findAll();
+        List<ContactRequest> allRequests = requestRepository.findAll();
 
-        for (FriendshipRequest friendshipRequest : allRequests) {
+        for (ContactRequest friendshipRequest : allRequests) {
             if (friendshipRequest.getFrom().equalsIgnoreCase(from) && friendshipRequest.getTo().equalsIgnoreCase(to)) {
                 return true;
             }
@@ -78,9 +79,9 @@ public class FriendshipService {
     // Check if request is actually a accept of a request
     public boolean isAcceptance(String from, String to) {
 
-        List<FriendshipRequest> allRequests = requestRepository.findAll();
+        List<ContactRequest> allRequests = requestRepository.findAll();
 
-        for (FriendshipRequest friendshipRequest : allRequests) {
+        for (ContactRequest friendshipRequest : allRequests) {
             if (friendshipRequest.getFrom().equalsIgnoreCase(to) && friendshipRequest.getTo().equalsIgnoreCase(from)) {
                 return true;
             }
@@ -93,10 +94,10 @@ public class FriendshipService {
 
         int max = 1;
 
-        List<Friendship> allUser = friendshipRepository.findAll();
+        List<Contacts> allUser = contactRepository.findAll();
         for (int i = 0; i < allUser.size(); i++) {
-            if (allUser.get(i).getFriendshipId() >= 1) {
-                max = allUser.get(i).getFriendshipId();
+            if (allUser.get(i).getContactId() >= 1) {
+                max = allUser.get(i).getContactId();
             }
 
         }
@@ -108,7 +109,7 @@ public class FriendshipService {
 
         int max = 1;
 
-        List<FriendshipRequest> allUser = requestRepository.findAll();
+        List<ContactRequest> allUser = requestRepository.findAll();
         for (int i = 0; i < allUser.size(); i++) {
             if (allUser.get(i).getRequestId() >= 1) {
                 max = allUser.get(i).getRequestId();
@@ -119,10 +120,10 @@ public class FriendshipService {
         return max;
     }
 
-    public List<Friendship> getFriendsbyUser(String username) {
-        List<Friendship> allFriendships = friendshipRepository.findAll();
-        List<Friendship> allFriendsOfUser = new ArrayList<>();
-        for (Friendship friendship : allFriendships) {
+    public List<Contacts> getFriendsbyUser(String username) {
+        List<Contacts> allFriendships = contactRepository.findAll();
+        List<Contacts> allFriendsOfUser = new ArrayList<>();
+        for (Contacts friendship : allFriendships) {
             System.out.println(friendship.getUsername2() + " Hä? " + username);
             if (friendship.getUsername1().equalsIgnoreCase(username)
                     || friendship.getUsername2().equalsIgnoreCase(username)) {
@@ -145,9 +146,9 @@ public class FriendshipService {
 
     public int getIdOfRequest(String from, String to) {
 
-        List<FriendshipRequest> allRequests = requestRepository.findAll();
+        List<ContactRequest> allRequests = requestRepository.findAll();
 
-        for (FriendshipRequest friendshipRequest : allRequests) {
+        for (ContactRequest friendshipRequest : allRequests) {
             if (friendshipRequest.getFrom().equalsIgnoreCase(from) && friendshipRequest.getTo().equalsIgnoreCase(to) ||
                     friendshipRequest.getFrom().equalsIgnoreCase(to)
                             && friendshipRequest.getTo().equalsIgnoreCase(from)) {
@@ -163,15 +164,15 @@ public class FriendshipService {
 
     public int getIdOfFriendship(String user1, String user2) {
 
-        List<Friendship> allFriendships = friendshipRepository.findAll();
+        List<Contacts> allFriendships = contactRepository.findAll();
 
-        for (Friendship friendshipRequest : allFriendships) {
+        for (Contacts friendshipRequest : allFriendships) {
             if (friendshipRequest.getUsername1().equalsIgnoreCase(user1)
                     && friendshipRequest.getUsername2().equalsIgnoreCase(user2) ||
                     friendshipRequest.getUsername1().equalsIgnoreCase(user2)
                             && friendshipRequest.getUsername2().equalsIgnoreCase(user1)) {
 
-                return friendshipRequest.getFriendshipId();
+                return friendshipRequest.getContactId();
 
             }
         }
@@ -183,15 +184,15 @@ public class FriendshipService {
     public void deleteFriendship(String user1, String user2) {
         if (getIdOfFriendship(user1, user2) != -100) {
             System.out.println("Delete Friendship beetween: " + user1 + "-X-" + user2);
-            friendshipRepository.deleteById(getIdOfFriendship(user1, user2));
+            contactRepository.deleteById(getIdOfFriendship(user1, user2));
         }
     }
 
     public boolean areFriends(String user1, String user2) {
 
-        List<Friendship> allFriends = friendshipRepository.findAll();
+        List<Contacts> allFriends = contactRepository.findAll();
 
-        for (Friendship friendship : allFriends) {
+        for (Contacts friendship : allFriends) {
             if (user1.equals(friendship.getUsername1()) && user2.equals(friendship.getUsername2()) ||
                     user1.equals(friendship.getUsername2()) && user2.equals(friendship.getUsername1())) {
                 return true;

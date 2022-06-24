@@ -1,28 +1,28 @@
-package dech.board.Friendship;
+package dech.board.Contacts;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "Friendship")
-public class Friendship {
+@Document(collection = "Contacts")
+public class Contacts {
 
     @Id
-    private int friendshipId;
+    private int contactId;
 
     private String username1;
     private String username2;
 
-    public Friendship(String username1, String username2) {
+    public Contacts(String username1, String username2) {
         this.username1 = username1;
         this.username2 = username2;
     }
 
-    public int getFriendshipId() {
-        return friendshipId;
+    public int getContactId() {
+        return contactId;
     }
 
-    public void setFriendshipId(int friendshipId) {
-        this.friendshipId = friendshipId;
+    public void setContactId(int contactId) {
+        this.contactId = contactId;
     }
 
     public String getUsername1() {
