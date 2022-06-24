@@ -2,6 +2,8 @@ package dech.board.post;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+import java.time.LocalDateTime;
+
 import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
@@ -23,6 +25,8 @@ public class Post {
 	private int downVotes;
 	private Boolean important;
 
+	private LocalDateTime creationDate;
+
 	private static int counter = 1;
 
 	private int messageBoardId;
@@ -41,6 +45,7 @@ public class Post {
 		this.title = title;
 		this.content = content;
 		this.important = important;
+		this.creationDate = LocalDateTime.now();
 
 	}
 
@@ -72,6 +77,10 @@ public class Post {
 
 	public int getMessageId() {
 		return postId;
+	}
+
+	public LocalDateTime getCreationDate() {
+		return creationDate;
 	}
 
 	public void setMessageId(int messageId) {
@@ -135,6 +144,10 @@ public class Post {
 	}
 
 
+
+	public void setCreationDate(LocalDateTime creationDate) {
+		this.creationDate = creationDate;
+	}
 
 	@Override
 	public String toString() {
