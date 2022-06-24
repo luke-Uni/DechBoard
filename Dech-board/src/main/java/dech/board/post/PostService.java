@@ -1,6 +1,8 @@
 package dech.board.post;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -72,6 +74,22 @@ public class PostService {
 	public List<Post> getPosts() {
 
 		List<Post> allPosts = postRepository.findAll();
+
+		return sortPosts(allPosts);
+
+	}
+
+	public List<Post> sortPosts(List<Post> allPosts) {
+
+		Collections.sort(allPosts, new Comparator<Post>() {
+			public int compare(Post post1, Post post2) {
+				return String.valueOf(post1.getCreationDate().getDayOfYear())
+						.compareTo(String.valueOf(post2.getCreationDate().getDayOfYear()));
+			}
+		});
+
+		Collections.reverse(allPosts);
+
 		return allPosts;
 	}
 
