@@ -2,6 +2,8 @@ package dech.board.MessageBoard;
 
 import org.springframework.http.MediaType;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,10 +37,10 @@ public ResponseEntity<?> addMessageBoard(@RequestBody MessageBoard messageBoard,
                     .equals((authorization))) {
 
                 messageBoard.setAdmin(authService.getUsernameByToKen(authorization));
-                messageBoardService.addMessageBoard(messageBoard);
+                messageBoardService.addMessageBoard(messageBoard, authService.getUsernameByToKen(authorization));
                 //postService.addPost(post);
                 System.out.println(messageBoard);
-                return ResponseEntity.status(HttpStatus.CREATED).body(messageBoardService.getMessageBoards());
+                return ResponseEntity.status(HttpStatus.CREATED).body(messageBoardService.getMessageBoards(authService.getUsernameByToKen(authorization)));
             }
             return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
         }
@@ -48,6 +50,34 @@ public ResponseEntity<?> addMessageBoard(@RequestBody MessageBoard messageBoard,
     return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
 
 }
+
+
+
+@CrossOrigin
+// Mapping to create a new post
+@RequestMapping(value = "/messageboard/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE )
+public ResponseEntity<?> getMessageBoard( @RequestHeader String authorization) {
+    System.out.println(authorization + "AUTH");
+    //System.out.println(jsonWT);
+    if (authService.getUsernameByToKen(authorization) != null) {
+        if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization)) != null) {
+            if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
+                    .equals((authorization))) {
+
+                
+               List<MessageBoard> allMessageBoards = messageBoardService.getMessageBoards(authService.getUsernameByToKen(authorization));
+                return ResponseEntity.status(HttpStatus.CREATED).body(allMessageBoards);
+            }
+            return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+    }
+    
+    return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+
+}
+
+
 
 
 }

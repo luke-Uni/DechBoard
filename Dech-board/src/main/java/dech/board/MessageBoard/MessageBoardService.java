@@ -1,5 +1,6 @@
 package dech.board.MessageBoard;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,16 +30,26 @@ public class MessageBoardService {
 	}
 
     // method to ad a post
-	public void addMessageBoard(MessageBoard messageBoard) {
+	public void addMessageBoard(MessageBoard messageBoard, String admin) {
 		messageBoard.setMessageBoardId(getHighestMessageBoardId() + 1);
+		messageBoard.getParticipants().add(admin);
 		messageBoardRepository.save(messageBoard);
 
 	}
 
-    public List<MessageBoard> getMessageBoards() {
+    public List<MessageBoard> getMessageBoards(String username) {
+		List<MessageBoard> allBoards = new ArrayList<>();
 
-		List<MessageBoard> allPosts = messageBoardRepository.findAll();
-		return allPosts;
+		for(MessageBoard messageBoard : messageBoardRepository.findAll()){
+			for(String participant : messageBoard.getParticipants()){
+				if(username.equals(participant)){
+					allBoards.add(messageBoard);
+				}
+			}
+		}
+
+		//List<MessageBoard> allPosts = messageBoardRepository.findAll();
+		return allBoards;
 	}
 
 
