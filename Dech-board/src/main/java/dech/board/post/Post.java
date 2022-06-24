@@ -25,6 +25,11 @@ public class Post {
 
 	private static int counter = 1;
 
+	private int messageBoardId;
+
+	
+
+	
 	// The Attributes upVotes and downVotes dont belong in the Constructer
 	@PersistenceConstructor
 	@JsonCreator
@@ -120,6 +125,16 @@ public class Post {
 	public void setImportant(Boolean important) {
 		this.important = important;
 	}
+
+	public int getMessageBoardId() {
+		return messageBoardId;
+	}
+
+	public void setMessageBoardId(int messageBoardId) {
+		this.messageBoardId = messageBoardId;
+	}
+
+
 
 	@Override
 	public String toString() {
