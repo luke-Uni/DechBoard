@@ -94,6 +94,7 @@ public class Controller {
                         .equals((authorization))) {
 
                     postService.addImgToPost(multipartFile, postId);
+                    System.out.println(multipartFile.getOriginalFilename());
                     return String.format("File is in Controller ", multipartFile.getOriginalFilename());
                     // return new ResponseEntity<String>(HttpStatus.CREATED);
                 }
