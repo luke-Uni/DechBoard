@@ -1,6 +1,7 @@
 package dech.board.post;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -71,11 +72,21 @@ public class PostService {
 		return null;
 	}
 
-	public List<Post> getPosts() {
+	public List<Post> getPosts(int boardId) {
 
 		List<Post> allPosts = postRepository.findAll();
 
-		return sortPosts(allPosts);
+		System.out.println(boardId);
+
+		List<Post> postsOfBoard = new ArrayList<>();
+
+		for (Post post : allPosts) {
+			if (post.getMessageBoardId() == boardId) {
+				postsOfBoard.add(post);
+			}
+		}
+
+		return sortPosts(postsOfBoard);
 
 	}
 

@@ -71,7 +71,7 @@ public class Controller {
 
                     postService.addPost(post);
                     System.out.println(post);
-                    return ResponseEntity.status(HttpStatus.CREATED).body(postService.getPosts());
+                    return ResponseEntity.status(HttpStatus.CREATED).body(postService.getPosts(0));
                 }
                 return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
             }
@@ -109,14 +109,14 @@ public class Controller {
 
     @CrossOrigin
     // Mapping to create a new post
-    @RequestMapping(value = "/posts/getall", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getPost(@RequestHeader String authorization) {
+    @RequestMapping(value = "/posts/{boardId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getPost(@RequestHeader String authorization, @PathVariable int boardId) {
         System.out.println(authService.getUsernameByToKen(authorization) + " wants to see all Messages!");
         if (authService.getUsernameByToKen(authorization) != null) {
             if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization)) != null) {
                 if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
                         .equals(authorization)) {
-                    List<Post> list = postService.getPosts();
+                    List<Post> list = postService.getPosts(boardId);
 
                     return ResponseEntity.status(HttpStatus.OK).body(list);
                 }
