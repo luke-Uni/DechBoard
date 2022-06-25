@@ -2,6 +2,7 @@ package dech.board.MessageBoard;
 
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,9 +11,10 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 @Document(collection = "MessageBoard")
 public class MessageBoard {
 
-    private String messageBoardName;
-
+    @Id
     private int messageBoardId;
+
+    private String messageBoardName;
 
     private List<String> participants;
 
