@@ -83,6 +83,35 @@ public class Controller {
     }
 
     @CrossOrigin
+    // Mapping to create a new post
+    @RequestMapping(value = "/posts/create/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> addPostWithId(@RequestBody Post post, @RequestHeader String authorization, @PathVariable int id ) {
+        System.out.println(authorization + "AUTH");
+        System.out.println(jsonWT);
+        if (authService.getUsernameByToKen(authorization) != null) {
+            if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization)) != null) {
+                if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
+                        .equals((authorization))) {
+
+                    post.setUsername(authService.getUsernameByToKen(authorization));
+                    post.setMessageBoardId(id);
+
+                    postService.addPost(post);
+                    System.out.println(post);
+                    return ResponseEntity.status(HttpStatus.CREATED).body(postService.getPosts(0));
+                }
+                return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+            }
+            return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+        }
+        // System.out.println("Hallo3");
+        return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+
+    }
+
+
+
+    @CrossOrigin
     // Mapping to create add Image to Post
     @RequestMapping(value = "/posts/image", method = RequestMethod.POST)
     public String addPicture(@RequestHeader String postId, @RequestHeader String authorization,
