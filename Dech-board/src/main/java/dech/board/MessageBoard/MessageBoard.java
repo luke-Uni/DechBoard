@@ -12,7 +12,7 @@ public class MessageBoard {
 
     private String messageBoardName;
 
-    private int MessageBoardId;
+    private int messageBoardId;
 
     private List<String> participants;
 
@@ -31,11 +31,11 @@ public class MessageBoard {
     }
 
     public int getMessageBoardId() {
-        return MessageBoardId;
+        return messageBoardId;
     }
 
     public void setMessageBoardId(int messageBoardId) {
-        MessageBoardId = messageBoardId;
+        this.messageBoardId = messageBoardId;
     }
 
     public String getMessageBoardName() {
@@ -65,7 +65,7 @@ public class MessageBoard {
     @Override
     public String toString() {
         String s;
-        s = "ID: " + MessageBoardId + "\n" + "Participants: " + participants + "\n" + "Admin: " + "\n" + admin + "\n"
+        s = "ID: " + messageBoardId + "\n" + "Participants: " + participants + "\n" + "Admin: " + "\n" + admin + "\n"
                 + "MessageBoardName: " + messageBoardName;
         return s;
     }

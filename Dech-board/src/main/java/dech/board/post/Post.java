@@ -152,7 +152,7 @@ public class Post {
 	@Override
 	public String toString() {
 		String s;
-		s = "Username: " + username + "\n" + "Title: " + title + "\n" + "Content: " + "\n" + content + "\n"
+		s = "MessageBoardID:"+messageBoardId +"Username: " + username + "\n" + "Title: " + title + "\n" + "Content: " + "\n" + content + "\n"
 				+ "Important: " + important;
 		return s;
 	}

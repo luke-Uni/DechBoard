@@ -81,8 +81,13 @@ public class PostService {
 		List<Post> postsOfBoard = new ArrayList<>();
 
 		for (Post post : allPosts) {
+			System.out.println("---------------------------------------------------------");
+			System.out.println(post);
 			if (post.getMessageBoardId() == boardId) {
+
 				postsOfBoard.add(post);
+				System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++");
+				System.out.println(post);
 			}
 		}
 

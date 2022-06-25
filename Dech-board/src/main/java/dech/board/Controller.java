@@ -117,6 +117,7 @@ public class Controller {
                 if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
                         .equals(authorization)) {
                     List<Post> list = postService.getPosts(boardId);
+                    System.out.println(list);
 
                     return ResponseEntity.status(HttpStatus.OK).body(list);
                 }
