@@ -1,5 +1,13 @@
 package dech.board;
 
+//---------
+import com.tencentcloudapi.common.Credential;
+import com.tencentcloudapi.common.profile.ClientProfile;
+import com.tencentcloudapi.common.profile.HttpProfile;
+import com.tencentcloudapi.common.exception.TencentCloudSDKException;
+import com.tencentcloudapi.tmt.v20180321.TmtClient;
+import com.tencentcloudapi.tmt.v20180321.models.*;
+//------
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -30,6 +38,7 @@ import dech.board.confirmation.EmailSenderService;
 import dech.board.post.Post;
 import dech.board.post.PostService;
 import dech.board.user.State;
+import dech.board.user.TranslationDTO;
 import dech.board.user.User;
 import dech.board.user.UserService;
 
@@ -165,7 +174,9 @@ public class Controller {
     public ResponseEntity<?> createUser(@RequestBody User user) {
         if (userService.validInputs(user).equals("perfect")) {
 
+                
             userService.createUser(user);
+
 
             Confirmation confirmation = new Confirmation(user.getEmail());
 
@@ -340,5 +351,56 @@ public class Controller {
         return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 
     }
+
+
+    @CrossOrigin
+    // Mapping to confirm a User after registration
+    @RequestMapping(value = "/translatePost", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> translateText(@RequestBody TranslationDTO translationDTO) {
+
+        // if (translationDTO.getText() != null && translationDTO.getTarget() != null) {
+            TextTranslateResponse translation  = new TextTranslateResponse()  ;
+            
+            try{
+                // To instantiate an authentication object, the input parameter needs to be passed into the Tencent Cloud account secretId, secretKey, and the confidentiality of the key pair should be paid attention to here
+                // The key can be obtained by going to https://console.cloud.tencent.com/cam/capi website
+                Credential cred = new Credential("AKIDjNq594oOXcYHuNeiX6WkjTyEF0YIo58x", "d3JL9i8MPFvOacR8fDgz5xc4LPHxTBmC");
+                // Instantiate an http option, optional, with no special needs to skip
+                HttpProfile httpProfile = new HttpProfile();
+                httpProfile.setEndpoint("tmt.tencentcloudapi.com");
+                // Instantiate a client option, optional, with no special requirements to skip
+                ClientProfile clientProfile = new ClientProfile();
+                clientProfile.setHttpProfile(httpProfile);
+                // Instantiate the client object to request the product, clientProfile is optional
+                TmtClient client = new TmtClient(cred, "eu-frankfurt", clientProfile);
+                // Instantiate a request object, and each interface will correspond to a request object
+                TextTranslateRequest req = new TextTranslateRequest();
+                req.setSourceText(translationDTO.getText());
+                req.setSource("auto");
+                req.setTarget(translationDTO.getTarget());
+                req.setProjectId(0L);
+                // The returned resp is an instance of textTranslateResponse that corresponds to the request object
+                TextTranslateResponse resp = client.TextTranslate(req);
+                // Outputs a json-formatted string back to the package
+                 //hallo = TextTranslateResponse.toJsonString(resp);
+                 translation = resp;
+                System.out.println(TextTranslateResponse.toJsonString(resp));
+            } catch (TencentCloudSDKException e) {
+                System.out.println(e.toString());
+            }
+            //--------------------------------------------
+
+
+            //System.out.println("Confirmation for [" + confDTO.getEmail() + " ] does not Exist!");
+            return ResponseEntity.status(HttpStatus.OK).body(TextTranslateResponse.toJsonString(translation));
+
+
+        //}
+
+       // System.out.println("Wrong values in request");
+        //return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+
+    }
+
 
 }

@@ -13,6 +13,7 @@ public class MessageBoard {
 
     @Id
     private int messageBoardId;
+    
 
     private String messageBoardName;
 
