@@ -20,7 +20,7 @@ import dech.board.user.User;
 import dech.board.user.UserService;
 
 @RestController
-public class Contact {
+public class ContactController {
 
     @Autowired
     ContactService friendshipService;
