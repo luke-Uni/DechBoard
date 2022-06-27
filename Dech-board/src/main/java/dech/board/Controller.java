@@ -68,7 +68,7 @@ public class Controller {
     @CrossOrigin
     // Mapping to create a new post
     @RequestMapping(value = "/posts/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addPost(@RequestBody Post post, @RequestHeader String authorization) {
+    public ResponseEntity<?> addPost(@RequestBody Post post, @RequestHeader String authorization)  {
         System.out.println(authorization + "AUTH");
         System.out.println(jsonWT);
         if (authService.getUsernameByToKen(authorization) != null) {
@@ -77,9 +77,8 @@ public class Controller {
                         .equals((authorization))) {
 
                     post.setUsername(authService.getUsernameByToKen(authorization));
-
+                    postService.checkProfinity2(post);
                     postService.addPost(post);
-                    System.out.println(post);
                     return ResponseEntity.status(HttpStatus.CREATED).body(postService.getPosts(0));
                 }
                 return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
@@ -104,7 +103,9 @@ public class Controller {
 
                     post.setUsername(authService.getUsernameByToKen(authorization));
                     post.setMessageBoardId(id);
-
+                    
+                        postService.checkProfinity2(post);
+                  
                     postService.addPost(post);
                     System.out.println(post);
                     return ResponseEntity.status(HttpStatus.CREATED).body(postService.getPosts(0));
