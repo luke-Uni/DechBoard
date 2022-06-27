@@ -108,53 +108,56 @@ public class PostService {
 		});
 
 		Collections.reverse(allPosts);
+		List<Post> sendPost= new ArrayList<>();
+		//List<Post> sortThePosts = allPosts;
+	// 	if(allPosts.size()>0){
+		
 
-		// List<Post> sortThePosts = allPosts;
-		// List<Post> sendPost= new ArrayList<>();
-
-		// List<LocalDateTime> dates = new ArrayList<>();
-		// dates.add(sortThePosts.get(0).getCreationDate());
-		// System.out.println("Hallo "+sortThePosts.get(0).getCreationDate());
-		// System.out.println("Hallo2 "+dates);
-		// for(int i = 0; i<dates.size(); i++){
-		// for(Post post : sortThePosts){
+	// 	List<LocalDateTime> dates = new ArrayList<>();
+	// 	dates.add(allPosts.get(0).getCreationDate());
+	// 	System.out.println("Hallo "+allPosts.get(0).getCreationDate());
+	// 	System.out.println("Hallo2 "+dates);
+	// 	for(int i = 0; i<dates.size(); i++){
+	// 	for(Post post : allPosts){
 			
-		// 	if(dates.get(i).getDayOfYear() !=post.getCreationDate().getDayOfYear()){
-		// 		dates.add(post.getCreationDate());
-		// 	}	
+	// 		if(dates.get(i).getDayOfYear() !=post.getCreationDate().getDayOfYear()){
+	// 			dates.add(post.getCreationDate());
+	// 		}	
 			
-		// }
-		// }
-		// List<Post> impPost = new ArrayList<>();
-		// List<Post> normalPost = new ArrayList<>();
+	// 	}
+	// 	}
+	// 	List<Post> impPost = new ArrayList<>();
+	// 	List<Post> normalPost = new ArrayList<>();
 
-		// for(LocalDateTime time : dates){
-		// for(Post post : sortThePosts ){
-		// 	//  if(post.getImportant()==null){
-		// 	// 	post.setImportant(false);
-		// 	//  }
+	// 	for(LocalDateTime time : dates){
+	// 	for(Post post : allPosts ){
+	// 		//  if(post.getImportant()==null){
+	// 		// 	post.setImportant(false);
+	// 		//  }
 
-		// 		if(post.getCreationDate() == time && post.getImportant()!=null){
-		// 			impPost.add(post);
+	// 			if(post.getCreationDate() == time && post.getImportant()!=null){
+	// 				impPost.add(post);
 					
-		// 		}
-		// 		else{
-		// 			normalPost.add(post);
-		// 		}
+	// 			}
+	// 			else{
+	// 				normalPost.add(post);
+	// 			}
 
-		// 	 }
+	// 		 }
 			 
 			 
-		// 	 sendPost.addAll(impPost);
-		// 	 sendPost.addAll(normalPost);
-		// 	 impPost.clear();
-		// 	 normalPost.clear();
+	// 		 sendPost.addAll(impPost);
+	// 		 sendPost.addAll(normalPost);
+	// 		 impPost.clear();
+	// 		 normalPost.clear();
 
-		// }
+	// 	}
 
 
-		return allPosts;
+	// 	//return allPosts;
+	// }
 		//return sendPost;
+		return allPosts;
 	}
 
 }
