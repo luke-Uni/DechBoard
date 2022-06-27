@@ -94,7 +94,8 @@ public class Controller {
     @CrossOrigin
     // Mapping to create a new post
     @RequestMapping(value = "/posts/create/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addPostWithId(@RequestBody Post post, @RequestHeader String authorization, @PathVariable int id ) {
+    public ResponseEntity<?> addPostWithId(@RequestBody Post post, @RequestHeader String authorization,
+            @PathVariable int id) {
         System.out.println(authorization + "AUTH");
         System.out.println(jsonWT);
         if (authService.getUsernameByToKen(authorization) != null) {
@@ -117,8 +118,6 @@ public class Controller {
         return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
 
     }
-
-
 
     @CrossOrigin
     // Mapping to create add Image to Post
@@ -174,9 +173,7 @@ public class Controller {
     public ResponseEntity<?> createUser(@RequestBody User user) {
         if (userService.validInputs(user).equals("perfect")) {
 
-                
             userService.createUser(user);
-
 
             Confirmation confirmation = new Confirmation(user.getEmail());
 
@@ -326,6 +323,42 @@ public class Controller {
         return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
     }
 
+
+
+    // @CrossOrigin
+    // // Mapping to get existing Users
+    // @RequestMapping(value = "/getGermanAndFriendsUsers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    // public ResponseEntity<?> getGermanAndFriendsUsers(@RequestHeader String authorization) {
+    //     // if a user wants the List of all Users
+    //     if (authService.getUsernameByToKen(authorization) != null) {
+    //         if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization)) != null) {
+    //             if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
+    //                     .equals(authorization)) {
+    //                 ArrayList<User> userList = new ArrayList<>();
+    //                 for (int i = 0; i < userService.getUser().size(); i++) {
+    //                     if (userService.getUser().get(i).getUsername()
+    //                             .equalsIgnoreCase(authService.getUsernameByToKen(authorization))) {
+
+    //                     } else {
+    //                         if (userService.getUser().get(i).getEmail().contains("fra-uas.de") && ) {
+    //                             userList.add(userService.getUser().get(i));}
+
+    //                     }
+
+    //                 }
+    //                 return ResponseEntity.status(HttpStatus.OK).body(userList);
+    //             }
+    //             return new ResponseEntity<String>(HttpStatus.EXPECTATION_FAILED);
+    //         }
+    //         return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+    //     }
+    //     return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+    // }
+
+
+
+    
+
     @CrossOrigin
     // Mapping to confirm a User after registration
     @RequestMapping(value = "/confirmuser", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -352,55 +385,59 @@ public class Controller {
 
     }
 
-
     @CrossOrigin
     // Mapping to confirm a User after registration
     @RequestMapping(value = "/translatePost", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> translateText(@RequestBody TranslationDTO translationDTO) {
 
         // if (translationDTO.getText() != null && translationDTO.getTarget() != null) {
-            TextTranslateResponse translation  = new TextTranslateResponse()  ;
-            
-            try{
-                // To instantiate an authentication object, the input parameter needs to be passed into the Tencent Cloud account secretId, secretKey, and the confidentiality of the key pair should be paid attention to here
-                // The key can be obtained by going to https://console.cloud.tencent.com/cam/capi website
-                Credential cred = new Credential("AKIDjNq594oOXcYHuNeiX6WkjTyEF0YIo58x", "d3JL9i8MPFvOacR8fDgz5xc4LPHxTBmC");
-                // Instantiate an http option, optional, with no special needs to skip
-                HttpProfile httpProfile = new HttpProfile();
-                httpProfile.setEndpoint("tmt.tencentcloudapi.com");
-                // Instantiate a client option, optional, with no special requirements to skip
-                ClientProfile clientProfile = new ClientProfile();
-                clientProfile.setHttpProfile(httpProfile);
-                // Instantiate the client object to request the product, clientProfile is optional
-                TmtClient client = new TmtClient(cred, "eu-frankfurt", clientProfile);
-                // Instantiate a request object, and each interface will correspond to a request object
-                TextTranslateRequest req = new TextTranslateRequest();
-                req.setSourceText(translationDTO.getText());
-                req.setSource("auto");
-                req.setTarget(translationDTO.getTarget());
-                req.setProjectId(0L);
-                // The returned resp is an instance of textTranslateResponse that corresponds to the request object
-                TextTranslateResponse resp = client.TextTranslate(req);
-                // Outputs a json-formatted string back to the package
-                 //hallo = TextTranslateResponse.toJsonString(resp);
-                 translation = resp;
-                System.out.println(TextTranslateResponse.toJsonString(resp));
-            } catch (TencentCloudSDKException e) {
-                System.out.println(e.toString());
-            }
-            //--------------------------------------------
+        TextTranslateResponse translation = new TextTranslateResponse();
 
+        try {
+            // To instantiate an authentication object, the input parameter needs to be
+            // passed into the Tencent Cloud account secretId, secretKey, and the
+            // confidentiality of the key pair should be paid attention to here
+            // The key can be obtained by going to
+            // https://console.cloud.tencent.com/cam/capi website
+            Credential cred = new Credential("AKIDjNq594oOXcYHuNeiX6WkjTyEF0YIo58x",
+                    "d3JL9i8MPFvOacR8fDgz5xc4LPHxTBmC");
+            // Instantiate an http option, optional, with no special needs to skip
+            HttpProfile httpProfile = new HttpProfile();
+            httpProfile.setEndpoint("tmt.tencentcloudapi.com");
+            // Instantiate a client option, optional, with no special requirements to skip
+            ClientProfile clientProfile = new ClientProfile();
+            clientProfile.setHttpProfile(httpProfile);
+            // Instantiate the client object to request the product, clientProfile is
+            // optional
+            TmtClient client = new TmtClient(cred, "eu-frankfurt", clientProfile);
+            // Instantiate a request object, and each interface will correspond to a request
+            // object
+            TextTranslateRequest req = new TextTranslateRequest();
+            req.setSourceText(translationDTO.getText());
+            req.setSource("auto");
+            req.setTarget(translationDTO.getTarget());
+            req.setProjectId(0L);
+            // The returned resp is an instance of textTranslateResponse that corresponds to
+            // the request object
+            TextTranslateResponse resp = client.TextTranslate(req);
+            // Outputs a json-formatted string back to the package
+            // hallo = TextTranslateResponse.toJsonString(resp);
+            translation = resp;
+            System.out.println(TextTranslateResponse.toJsonString(resp));
+        } catch (TencentCloudSDKException e) {
+            System.out.println(e.toString());
+        }
+        // --------------------------------------------
 
-            //System.out.println("Confirmation for [" + confDTO.getEmail() + " ] does not Exist!");
-            return ResponseEntity.status(HttpStatus.OK).body(TextTranslateResponse.toJsonString(translation));
+        // System.out.println("Confirmation for [" + confDTO.getEmail() + " ] does not
+        // Exist!");
+        return ResponseEntity.status(HttpStatus.OK).body(TextTranslateResponse.toJsonString(translation));
 
+        // }
 
-        //}
-
-       // System.out.println("Wrong values in request");
-        //return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+        // System.out.println("Wrong values in request");
+        // return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 
     }
-
 
 }
