@@ -1,12 +1,15 @@
 package dech.board.post;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.tomcat.jni.Local;
 import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,13 +84,13 @@ public class PostService {
 		List<Post> postsOfBoard = new ArrayList<>();
 
 		for (Post post : allPosts) {
-			System.out.println("---------------------------------------------------------");
-			System.out.println(post);
+			//System.out.println("---------------------------------------------------------");
+			//System.out.println(post);
 			if (post.getMessageBoardId() == boardId) {
 
 				postsOfBoard.add(post);
-				System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++");
-				System.out.println(post);
+				//System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++");
+				//System.out.println(post);
 			}
 		}
 
@@ -106,7 +109,52 @@ public class PostService {
 
 		Collections.reverse(allPosts);
 
+		// List<Post> sortThePosts = allPosts;
+		// List<Post> sendPost= new ArrayList<>();
+
+		// List<LocalDateTime> dates = new ArrayList<>();
+		// dates.add(sortThePosts.get(0).getCreationDate());
+		// System.out.println("Hallo "+sortThePosts.get(0).getCreationDate());
+		// System.out.println("Hallo2 "+dates);
+		// for(int i = 0; i<dates.size(); i++){
+		// for(Post post : sortThePosts){
+			
+		// 	if(dates.get(i).getDayOfYear() !=post.getCreationDate().getDayOfYear()){
+		// 		dates.add(post.getCreationDate());
+		// 	}	
+			
+		// }
+		// }
+		// List<Post> impPost = new ArrayList<>();
+		// List<Post> normalPost = new ArrayList<>();
+
+		// for(LocalDateTime time : dates){
+		// for(Post post : sortThePosts ){
+		// 	//  if(post.getImportant()==null){
+		// 	// 	post.setImportant(false);
+		// 	//  }
+
+		// 		if(post.getCreationDate() == time && post.getImportant()!=null){
+		// 			impPost.add(post);
+					
+		// 		}
+		// 		else{
+		// 			normalPost.add(post);
+		// 		}
+
+		// 	 }
+			 
+			 
+		// 	 sendPost.addAll(impPost);
+		// 	 sendPost.addAll(normalPost);
+		// 	 impPost.clear();
+		// 	 normalPost.clear();
+
+		// }
+
+
 		return allPosts;
+		//return sendPost;
 	}
 
 }
