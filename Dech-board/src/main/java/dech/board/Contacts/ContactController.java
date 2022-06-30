@@ -89,6 +89,17 @@ public class ContactController {
                 .body("Authorization Token is " + null);
     }
 
+    // Get all request to specific user
+
+    @CrossOrigin
+    @RequestMapping(value = "/requests", method = RequestMethod.GET)
+    public ResponseEntity<?> getRequestsofAuser(@RequestHeader String authorization) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(
+                friendshipService.getAllrequestsToUser(authService.getUsernameByToKen(authorization)));
+    }
+
+    // Delete a friend
     @CrossOrigin
     @RequestMapping(value = "/contact/{username}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteASpecificFriend(@RequestHeader String authorization, @PathVariable String username) {

@@ -90,6 +90,21 @@ public class ContactService {
         return false;
     }
 
+    public List<ContactRequest> getAllrequestsToUser(String username) {
+        List<ContactRequest> allRequests = requestRepository.findAll();
+
+        List<ContactRequest> requestsToUser = new ArrayList<>();
+
+        for (ContactRequest contactRequest : allRequests) {
+            if (contactRequest.getTo().equalsIgnoreCase(username)) {
+                requestsToUser.add(contactRequest);
+            }
+        }
+
+        return requestsToUser;
+
+    }
+
     public int getHighestFriendshipId() {
 
         int max = 1;
