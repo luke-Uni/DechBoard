@@ -47,14 +47,6 @@ public class MessageBoardService {
 				}
 			}
 		}
-
-		//List<MessageBoard> allPosts = messageBoardRepository.findAll();
 		return allBoards;
 	}
-
-
-
-
-
-
 }

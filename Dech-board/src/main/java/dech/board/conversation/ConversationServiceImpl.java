@@ -3,8 +3,6 @@ package dech.board.conversation;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-//import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,12 +34,9 @@ public class ConversationServiceImpl {
 		List<Conversation> finalList = new ArrayList<>();
 
 		for (int i = 0; i < allConvos.size(); i++) {
-			// System.out.println("Was geht 1");
 			for (int x = 0; x < allConvos.get(i).getConversationParticipants().size(); x++) {
-				// System.out.println("Was geht 2");
 				String name = allConvos.get(i).getConversationParticipants().get(x);
 				if (name.equalsIgnoreCase(username)) {
-					// System.out.println("Was geht 3");
 					finalList.add(allConvos.get(i));
 
 				}
@@ -103,18 +98,11 @@ public class ConversationServiceImpl {
 				}
 				if (duplicateParticipants == conversation.getConversationParticipants().size()) {
 					exists = true;
-					// Conversation conversationDTOOLD = conversation;
 					Conversation conversationDTO = new Conversation(convoParticipentsValue);
 					conversationDTO.setLastMessageSend(LocalDateTime.now());
 					conversationDTO.setId(conversation.getId());
-					// conversationDTO.setId(getHighestConversationId() + 1);
-					// conversationDTO.setId(conversation.getId());
 					conversationRepository.delete(conversation);
 					conversationRepository.save(conversationDTO);
-
-					// conversationRepository.delete(conversationDTOOLD);
-
-					// conversationRepository.save(conversationDTO);
 					return;
 				} else {
 					duplicateParticipants = 0;
@@ -125,7 +113,6 @@ public class ConversationServiceImpl {
 				Conversation newConvo = new Conversation(convoParticipentsValue);
 				newConvo.setId(getHighestConversationId() + 1);
 				newConvo.setLastMessageSend(LocalDateTime.now());
-				// newConvo.getConversationParticipants().add(username);
 				conversationRepository.save(newConvo);
 				return;
 			}
@@ -133,103 +120,6 @@ public class ConversationServiceImpl {
 		}
 
 	}
-
-	// Function to create a new conversation between two user
-	// public void createConversationGroup(String username, List<String>
-	// participants) {
-	// System.out.println("Participants " + participants);
-	// int duplicateParticipantCounter = 0;
-	// List<Conversation> conversationList = conversationRepository.findAll();
-	// List<Conversation> trueConversation = new ArrayList<Conversation>();
-	// Boolean erstellt = false;
-	// // Get all needed Conversations where there are as many participants, as
-	// above
-	// if (conversationList.size() == 0) {
-	// Conversation newConvo = new Conversation(participants);
-	// newConvo.setId(getHighestConversationId() + 1);
-	// newConvo.getConversationParticipants().add(username);
-	// conversationRepository.save(newConvo);
-	// return;
-	// }
-
-	// else {
-	// // System.out.println("Erstens");
-	// for (Conversation convo : conversationList) {
-	// if (convo.getConversationParticipants().size() == (participants.size() + 1))
-	// {
-
-	// // convo.getConversationParticipants().add(username);
-	// trueConversation.add(convo);
-
-	// // return;
-	// }
-	// }
-	// if (trueConversation.size() > 0) {
-
-	// participants.add(username);
-
-	// for (Conversation convo : trueConversation) {
-	// List<String> nameList = convo.getConversationParticipants();
-
-	// // Get all participants of one conversation
-	// for (String participantName : nameList) {
-
-	// // Check if the users from received partcipant List already are in one
-	// // conversation together;
-	// for (int x = 0; x < participants.size(); x++) {
-
-	// if (participantName.contains(participants.get(x))) {
-	// duplicateParticipantCounter++;
-	// System.out.println("Erster Pfad: " + duplicateParticipantCounter);
-
-	// } else if (participantName.contains(username)) {
-	// duplicateParticipantCounter++;
-	// System.out.println("Zweiter Pfad: " + duplicateParticipantCounter);
-	// }
-	// }
-	// // for (String inputParticipant : participants) {
-
-	// // }
-	// if (nameList.size() == duplicateParticipantCounter) {
-
-	// System.out.println("Duplicate Participants: " + duplicateParticipantCounter);
-	// Conversation conversationDTOOLD = convo;
-	// Conversation conversationDTO = convo;
-	// conversationDTO.setLastMessageSend(LocalDateTime.now());
-
-	// // conversationDTO.setId(getHighestConversationId() + 1);
-	// conversationDTO.setId(convo.getId());
-	// conversationRepository.delete(conversationDTOOLD);
-
-	// conversationRepository.save(conversationDTO);
-	// // All messages of this conversation have to get a updatet conversationID
-	// erstellt = true;
-
-	// return;
-
-	// } else if (nameList.size() != duplicateParticipantCounter) {
-	// System.out.println("Else Pfad: " + duplicateParticipantCounter);
-	// duplicateParticipantCounter = 0;
-
-	// }
-	// }
-	// }
-
-	// }
-	// // else if(){
-
-	// // }
-	// if (erstellt == false) {
-
-	// System.out.println("letzter Pfad: " + duplicateParticipantCounter);
-	// Conversation newConvo = new Conversation(participants);
-	// // newConvo.getConversationParticipants().add(username);
-	// newConvo.setId(getHighestConversationId() + 1);
-	// conversationRepository.save(newConvo);
-	// }
-	// }
-
-	// }
 
 	// Create ConversationID instantly after the creation of a conversation
 	public int getConversationID(List<String> names, String username) {

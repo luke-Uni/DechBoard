@@ -99,7 +99,6 @@ public class PostService {
 			}
 
 		}
-		// System.out.println(contentParts[0]);
 		if (check == 1) {
 			content = "";
 			for (int i = 0; i < contentParts.length; i++) {
@@ -404,13 +403,9 @@ public class PostService {
 		List<Post> postsOfBoard = new ArrayList<>();
 
 		for (Post post : allPosts) {
-			// System.out.println("---------------------------------------------------------");
-			// System.out.println(post);
 			if (post.getMessageBoardId() == boardId) {
 
 				postsOfBoard.add(post);
-				// System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++");
-				// System.out.println(post);
 			}
 		}
 
@@ -429,51 +424,6 @@ public class PostService {
 
 		Collections.reverse(allPosts);
 		List<Post> sendPost = new ArrayList<>();
-		// List<Post> sortThePosts = allPosts;
-		// if(allPosts.size()>0){
-
-		// List<LocalDateTime> dates = new ArrayList<>();
-		// dates.add(allPosts.get(0).getCreationDate());
-		// System.out.println("Hallo "+allPosts.get(0).getCreationDate());
-		// System.out.println("Hallo2 "+dates);
-		// for(int i = 0; i<dates.size(); i++){
-		// for(Post post : allPosts){
-
-		// if(dates.get(i).getDayOfYear() !=post.getCreationDate().getDayOfYear()){
-		// dates.add(post.getCreationDate());
-		// }
-
-		// }
-		// }
-		// List<Post> impPost = new ArrayList<>();
-		// List<Post> normalPost = new ArrayList<>();
-
-		// for(LocalDateTime time : dates){
-		// for(Post post : allPosts ){
-		// // if(post.getImportant()==null){
-		// // post.setImportant(false);
-		// // }
-
-		// if(post.getCreationDate() == time && post.getImportant()!=null){
-		// impPost.add(post);
-
-		// }
-		// else{
-		// normalPost.add(post);
-		// }
-
-		// }
-
-		// sendPost.addAll(impPost);
-		// sendPost.addAll(normalPost);
-		// impPost.clear();
-		// normalPost.clear();
-
-		// }
-
-		// //return allPosts;
-		// }
-		// return sendPost;
 		return allPosts;
 	}
 

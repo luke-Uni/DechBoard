@@ -36,31 +36,12 @@ public class MessageServiceImpl {
 		return max;
 	}
 
-	// Create and Add a message to the repository
-	// public Message createMessage(Message message) {
-
-	// 	if (message.getContent() != null && message.getUsername() != null) {
-	// 		message.setTime(LocalDateTime.now());
-	// 		message.setId(getHighestMessageId()+1);
-	// 		messageRepository.save(message);
-	// 		return message;
-	// 	} else {
-
-	// 		return null;
-	// 	}
-	// }
-
-	// Get all
-	// messages of
-	// one conversation
-
 	public List<Message> getMessages(String username, String recipient) {
 
 		System.out.println("Ich geh in die ArrayList messageList");
 		
 		List<Message> messages = new ArrayList<Message>();
 		List<Message> returnMessages = messageRepository.findAll();
-		//System.out.println(returnMessages.size());
 		for (int i = 0; i < returnMessages.size(); i++) {
 			if (returnMessages.get(i).getUsername().equalsIgnoreCase(username)
 					&& returnMessages.get(i).getRecipient().equalsIgnoreCase(recipient)) {
@@ -105,17 +86,11 @@ public class MessageServiceImpl {
 		return null;
 	}
 
-
-		//----------------------------------------------------------------------------------------------------------------------------------------------------
-
 		// Create and Add a message to the repository
 		public Message createMessageGroup(Message message) {
-
 			if (message.getContent() != null && message.getUsername() != null && message.getRecipientList()!=null) {
 				message.setTime(LocalDateTime.now());
 				message.setId(getHighestMessageId()+1);
-				//message.setConversationId(convoService.getConversationIdByUsernames(message.getRecipientList(), message.getUsername()));
-				//System.out.println("Hallo guten Tag");
 				messageRepository.save(message);
 				return message;
 			} else {
@@ -130,20 +105,10 @@ public class MessageServiceImpl {
 	//Create Message Groupchats
 	
 		public List<Message> getMessagesGroup(int conversationId, String username) {
-	
-			//System.out.println("Ich geh in die ArrayList messageList");
-			
 			List<Message> messages = new ArrayList<Message>();
-
-			//Conversation convo = convoService.getConversationById(conversationId);
-
 			List<Message> returnMessages = getMessagesByConvoId(conversationId);
-			
-			
-
 			for (int i = 0; i < returnMessages.size(); i++) {
 				if (returnMessages.get(i).getUsername().equalsIgnoreCase(username)) {
-
 					// Unlimited error
 					System.out.println("Ich hole mir die Messages");
 					returnMessages.get(i).setState(DirectionState.SEND);
@@ -156,21 +121,7 @@ public class MessageServiceImpl {
 					returnMessages.get(i).setSend(false);
 					messages.add(returnMessages.get(i));
 				}
-	
 			}
-	
-			// for (int i = 0; i < returnMessages.size(); i++) {
-			// 	if (returnMessages.get(i).getRecipient().equalsIgnoreCase(username)) {
-			// 		System.out.println("Drittens");
-			// 		returnMessages.get(i).setState(DirectionState.RECEIVED);
-			// 		returnMessages.get(i).setSend(false);
-			// 		messages.add(returnMessages.get(i));
-	
-			// 	}
-	
-			// }
-			//System.out.println("sortieren");
-			//getMessageListDescTIME(messages);
 			System.out.println(messages);
 			
 			return messages;

@@ -9,8 +9,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-//import com.fasterxml.jackson.annotation.JsonFormat;
-
 @Document(collection = "Post")
 public class Post {
 	// Attributes for a post on the dashboard
@@ -30,9 +28,6 @@ public class Post {
 	private static int counter = 1;
 
 	private int messageBoardId;
-
-	
-
 	
 	// The Attributes upVotes and downVotes dont belong in the Constructer
 	@PersistenceConstructor
@@ -41,18 +36,15 @@ public class Post {
 			Boolean important) {
 
 		this.postId = ++counter;
-		// this.username = username;
 		this.title = title;
 		this.content = content;
 		this.important = important;
 		this.creationDate = LocalDateTime.now();
-
 	}
 
 	public Post(String title, String content) {
 
 		this.postId = ++counter;
-		// this.username = username;
 		this.title = title;
 		this.content = content;
 		this.important = false;
@@ -142,8 +134,6 @@ public class Post {
 	public void setMessageBoardId(int messageBoardId) {
 		this.messageBoardId = messageBoardId;
 	}
-
-
 
 	public void setCreationDate(LocalDateTime creationDate) {
 		this.creationDate = creationDate;

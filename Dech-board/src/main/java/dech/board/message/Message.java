@@ -28,20 +28,6 @@ public class Message {
 
 	private static int counter = 1;
 
-	// @JsonCreator
-	// public Message(String username, String content, String recipient) {
-
-	// 	this.id = ++counter;
-	// 	this.username = username;
-	// 	this.content = content;
-	// 	this.recipient = recipient;
-	// 	this.setTime(LocalDateTime.now());
-	// 	this.setState(DirectionState.SEND);
-	// 	this.setSend(true);
-		
-
-	// }
-
 	@JsonCreator
 	//For Groupchats
 	public Message(String username, List<String>recipients,String content) {
