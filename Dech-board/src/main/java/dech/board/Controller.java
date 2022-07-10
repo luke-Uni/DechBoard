@@ -68,7 +68,7 @@ public class Controller {
     @CrossOrigin
     // Mapping to create a new post
     @RequestMapping(value = "/posts/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addPost(@RequestBody Post post, @RequestHeader String authorization)  {
+    public ResponseEntity<?> addPost(@RequestBody Post post, @RequestHeader String authorization) {
         System.out.println(authorization + "AUTH");
         System.out.println(jsonWT);
         if (authService.getUsernameByToKen(authorization) != null) {
@@ -77,12 +77,12 @@ public class Controller {
                         .equals((authorization))) {
 
                     post.setUsername(authService.getUsernameByToKen(authorization));
-                   // try {
-                     //   postService.checkProfinity(post);
-                    //} catch (IOException e) {
-                        // TODO Auto-generated catch block
-                     //   e.printStackTrace();
-                    //}
+                    // try {
+                    // postService.checkProfinity(post);
+                    // } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    // e.printStackTrace();
+                    // }
                     postService.addPost(post);
                     return ResponseEntity.status(HttpStatus.CREATED).body(postService.getPosts(0));
                 }
@@ -90,7 +90,7 @@ public class Controller {
             }
             return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
         }
-            return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
 
     }
 
@@ -108,14 +108,14 @@ public class Controller {
 
                     post.setUsername(authService.getUsernameByToKen(authorization));
                     post.setMessageBoardId(id);
-                    
-                        try {
-                            postService.checkProfinity(post);
-                        } catch (IOException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
-                  
+
+                    try {
+                        postService.checkProfinity(post);
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
                     postService.addPost(post);
                     System.out.println(post);
                     return ResponseEntity.status(HttpStatus.CREATED).body(postService.getPosts(0));
@@ -124,7 +124,7 @@ public class Controller {
             }
             return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
         }
-            return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
 
     }
 
@@ -190,7 +190,7 @@ public class Controller {
             confirmationService.createConfirmation(confirmation);
 
             senderService.sendEmail(user.getEmail(), "Confirm your E-Mail",
-                    "Hey, please confirm Your Email adress: \n https://6295d65cef6ded1aa8f66ec0--dechboard.netlify.app/#/confirmuser \n Token: "
+                    "Hey, please confirm Your Email adress: \n https://#/confirmuser \n Token: "
                             + confirmationService.getTokenByEmail(user.getEmail()));
 
             return ResponseEntity.status(HttpStatus.OK).body(user);
@@ -206,12 +206,12 @@ public class Controller {
     public ResponseEntity<?> login(@RequestBody User user) {
 
         System.out.println(user.getUsername() + " wants to Login!");
-        //try {
-          //  System.out.println(userService.check());
-        //} catch (IOException e) {
-            // TODO Auto-generated catch block
-          //  e.printStackTrace();
-        //}
+        // try {
+        // System.out.println(userService.check());
+        // } catch (IOException e) {
+        // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // }
         if (userService.checkIfUsernameExists(user.getUsername())) {
             if (userService.passwordIsCorrect(user.getUsername(), user.getPassword())) {
                 System.out.println("Fehler3");
@@ -336,7 +336,6 @@ public class Controller {
         }
         return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
     }
-    
 
     @CrossOrigin
     // Mapping to confirm a User after registration
