@@ -60,22 +60,6 @@ public class ContactService {
 
         return false;
     }
-    // public ArrayList<User> friendsObject(String username) {
-    // List<Friendship> nameList= getFriendsbyUser(username);
-    // ArrayList<User> objectFriends= new ArrayList<> ();
-    // for(int i=0; i<nameList.size(); i++){
-    // System.out.println(nameList.get(i).getUsername1()+" username 2
-    // :"+nameList.get(i).getUsername2());
-
-    // if(!nameList.get(i).getUsername1().equalsIgnoreCase(username)){
-    // objectFriends.add(userService.getUserByUsername(nameList.get(i).getUsername1()))
-    // ;}
-    // else if(!nameList.get(i).getUsername2().equalsIgnoreCase(username)){
-    // objectFriends.add(userService.getUserByUsername(nameList.get(i).getUsername2()))
-    // ;
-    // }}
-    // return objectFriends;
-    // }
     // Check if request is actually a accept of a request
     public boolean isAcceptance(String from, String to) {
 
