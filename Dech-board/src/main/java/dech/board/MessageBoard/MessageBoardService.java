@@ -42,7 +42,7 @@ public class MessageBoardService {
 
 		for(MessageBoard messageBoard : messageBoardRepository.findAll()){
 			for(String participant : messageBoard.getParticipants()){
-				if(username.equals(participant)){
+				if(username.equalsIgnoreCase(participant)){
 					allBoards.add(messageBoard);
 				}
 			}
