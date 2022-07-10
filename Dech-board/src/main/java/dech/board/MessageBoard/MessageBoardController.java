@@ -31,7 +31,6 @@ public class MessageBoardController {
     public ResponseEntity<?> addMessageBoard(@RequestBody MessageBoard messageBoard,
             @RequestHeader String authorization) {
         System.out.println(authorization + "AUTH");
-        // System.out.println(jsonWT);
         if (authService.getUsernameByToKen(authorization) != null) {
             if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization)) != null) {
                 if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
@@ -39,7 +38,6 @@ public class MessageBoardController {
 
                     messageBoard.setAdmin(authService.getUsernameByToKen(authorization));
                     messageBoardService.addMessageBoard(messageBoard, authService.getUsernameByToKen(authorization));
-                    // postService.addPost(post);
                     System.out.println(messageBoard);
                     return ResponseEntity.status(HttpStatus.CREATED)
                             .body(messageBoardService.getMessageBoards(authService.getUsernameByToKen(authorization)));
@@ -48,7 +46,6 @@ public class MessageBoardController {
             }
             return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
         }
-        // System.out.println("Hallo3");
         return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
 
     }
@@ -58,7 +55,6 @@ public class MessageBoardController {
     @RequestMapping(value = "/messageboard/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getMessageBoard(@RequestHeader String authorization) {
         System.out.println(authorization + "AUTH");
-        // System.out.println(jsonWT);
         if (authService.getUsernameByToKen(authorization) != null) {
             if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization)) != null) {
                 if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
