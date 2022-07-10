@@ -103,13 +103,7 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
-	// public User checkAllParameters(User user){
-	// if(){
 
-	// }
-
-	// return user;
-	// }
 	public void replaceUser(User user) {
 
 		User replacedUser = getUserByEmail(user.getEmail());

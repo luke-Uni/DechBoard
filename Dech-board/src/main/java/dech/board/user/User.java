@@ -18,10 +18,6 @@ public class User {
 	private State state;
 
 	private String country;
-
-	// private static int counter = 100;
-
-	// 1
 	@JsonCreator
 	public User(String username, String password, String email) {
 
