@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-//import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,17 +34,12 @@ public class ConversationController {
 	public ResponseEntity<?> getAllConversations(@RequestHeader String authorization) {
 
 		if (authService.getUsernameByToKen(authorization) != null) {
-			// System.out.println(authService.getUsernameByToKen(authorization));
 			if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization)) != null) {
-
-				// System.out.println(authService.getTokenByUsername(authService.getUsernameByToKen(authorization)));
 				
 				if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
 						.equals((authorization))) {
 
 					System.out.println(authService.getUsernameByToKen(authorization));
-					// List<Conversation> conversations = conversationService
-					// 		.getAllConversation(authService.getUsernameByToKen(authorization));
 					List<Conversation> conversations = conversationService.getAllConversationGroup(authService.getUsernameByToKen(authorization));
 
 					System.out.println(conversations);
