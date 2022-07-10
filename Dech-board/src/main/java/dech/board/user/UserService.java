@@ -1,5 +1,7 @@
 package dech.board.user;
 
+
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,25 @@ public class UserService {
 
 		return max;
 	}
+	//public String check () throws IOException{
+	//	System.out.println("we made it here");
+	//	File file= new File("src/help.txt");
+	//	System.out.println("trying to get the path");
+	//	Path path = file.toPath();
+	//	System.out.println("get the path");
+	//	String spath=path.toString();
+	//	BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\arvan\\Desktop\\ALLES\\Semester\\SommerSemester SS04\\adv. Program\\Backend1\\DechBoard\\Dech-board\\help.txt"));
+		//BufferedReader br = new BufferedReader(new FileReader("spath"));
+	//	System.out.println("got it");
+	//	String st;
+	//	while ((st = br.readLine()) != null){
+	//		System.out.println("also here");
+	//	    System.out.println(st);
+	//	}
+	//	System.out.println("nearly out");
+	//	return "hello world";
 
+	//}
 	public void createUser(User user) {
 
 		if (checkunimailFrankfurt(user)) {
@@ -67,6 +87,7 @@ public class UserService {
 		}
 		return false;
 	}
+
 	public boolean passwordIsCorrect(String username, String password) {
 
 		List<User> userList = userRepository.findAll();

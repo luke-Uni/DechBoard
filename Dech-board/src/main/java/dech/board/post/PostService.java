@@ -1,6 +1,7 @@
 package dech.board.post;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -68,12 +69,18 @@ public class PostService {
 	}
 
 	public void checkProfinity(Post post) throws IOException {
-		// System.out.println("zzxyzzz");
-		// BufferedReader br = new BufferedReader(new
-		// FileReader("C:\\Users\\arvan\\Downloads\\Liste.txt"));
-		Path path = Paths.get("test.txt");
-		String sPath = path + "";
-		BufferedReader br = new BufferedReader(new FileReader(sPath));
+		//Path path = Paths.get("test.txt");
+		//File f = new File("./help.txt");
+		//System.out.println(f.getPath()+" zzqr");
+		String basePath = new File("").getAbsolutePath();
+		String overrighted= basePath+"\\Dech-board\\help.txt";
+    	System.out.println(basePath+" adsdassd");
+		System.out.println(overrighted);
+
+		//String sPath = f.getPath().toString();
+		//BufferedReader br = new BufferedReader(new FileReader(sPath));
+		System.out.println("working das das");
+		BufferedReader br = new BufferedReader(new FileReader(overrighted));
 		StringBuilder sb = new StringBuilder();
 		String line = "";
 		System.out.println("Hi Hello");

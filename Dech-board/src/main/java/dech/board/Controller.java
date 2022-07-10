@@ -77,7 +77,12 @@ public class Controller {
                         .equals((authorization))) {
 
                     post.setUsername(authService.getUsernameByToKen(authorization));
-                    postService.checkProfinity2(post);
+                   // try {
+                     //   postService.checkProfinity(post);
+                    //} catch (IOException e) {
+                        // TODO Auto-generated catch block
+                     //   e.printStackTrace();
+                    //}
                     postService.addPost(post);
                     return ResponseEntity.status(HttpStatus.CREATED).body(postService.getPosts(0));
                 }
@@ -105,7 +110,12 @@ public class Controller {
                     post.setUsername(authService.getUsernameByToKen(authorization));
                     post.setMessageBoardId(id);
                     
-                        postService.checkProfinity2(post);
+                        try {
+                            postService.checkProfinity(post);
+                        } catch (IOException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
                   
                     postService.addPost(post);
                     System.out.println(post);
@@ -199,6 +209,12 @@ public class Controller {
     public ResponseEntity<?> login(@RequestBody User user) {
 
         System.out.println(user.getUsername() + " wants to Login!");
+        //try {
+          //  System.out.println(userService.check());
+        //} catch (IOException e) {
+            // TODO Auto-generated catch block
+          //  e.printStackTrace();
+        //}
         if (userService.checkIfUsernameExists(user.getUsername())) {
             if (userService.passwordIsCorrect(user.getUsername(), user.getPassword())) {
                 System.out.println("Fehler3");
