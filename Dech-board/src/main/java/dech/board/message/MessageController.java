@@ -91,7 +91,6 @@ public class MessageController {
 		System.out.println(message);
 
 		message.setUsername(authService.getUsernameByToKen(authorization));
-		// System.out.println("Hallo2: "+ message );
 		if (authService.getUsernameByToKen(authorization) != null) {
 			System.out.println(authService.getUsernameByToKen(authorization) + " created a message");
 			if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization)) != null) {
@@ -133,78 +132,21 @@ public class MessageController {
 	public ResponseEntity<?> getAllMessagesGroup(@PathVariable int conversationId,
 			@RequestHeader String authorization) {
 
-		// System.out.println(recipient);
-
 		if (authService.getUsernameByToKen(authorization) != null) {
-			// System.out.println(authService.getUsernameByToKen(authorization));
 			if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization)) != null) {
-
-				//
 				System.out.println(authService.getTokenByUsername(authService.getUsernameByToKen(authorization)));
-
 				if (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
 						.equals((authorization))) {
-
-					//
 					System.out.println(authService.getTokenByUsername(authService.getUsernameByToKen(authorization)));
-
 					List<Message> messages = messageServcice
 							.getMessagesGroup(conversationId, authService.getUsernameByToKen(authorization));
-
 					System.out.println(messages);
-
 					return ResponseEntity.status(HttpStatus.OK).body(messages);
 				}
 				return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
 			}
 			return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
 		}
-
 		return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
-
 	}
-
-	// @CrossOrigin
-	// // Mapping to
-	// // create a new post
-	// @RequestMapping(value = "/message/getall/{recipient}", method =
-	// RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-
-	// public ResponseEntity<?> getAllMessages(@PathVariable String recipient,
-	// @RequestHeader String authorization) {
-
-	// // System.out.println(recipient);
-
-	// if (authService.getUsernameByToKen(authorization) != null) {
-	// // System.out.println(authService.getUsernameByToKen(authorization));
-	// if
-	// (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
-	// != null) {
-
-	// //
-	// System.out.println(authService.getTokenByUsername(authService.getUsernameByToKen(authorization)));
-
-	// if
-	// (authService.getTokenByUsername(authService.getUsernameByToKen(authorization))
-	// .equals((authorization))) {
-
-	// //
-	// System.out.println(authService.getTokenByUsername(authService.getUsernameByToKen(authorization)));
-
-	// List<Message> messages = messageServcice
-	// .getMessages(authService.getUsernameByToKen(authorization), recipient);
-
-	// System.out.println(messages);
-
-	// return ResponseEntity.status(HttpStatus.OK).body(messages);
-	// }
-	// return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
-	// }
-	// return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
-	// }
-
-	// return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
-
-	// }
-
 }
