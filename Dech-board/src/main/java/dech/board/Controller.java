@@ -190,7 +190,7 @@ public class Controller {
             confirmationService.createConfirmation(confirmation);
 
             senderService.sendEmail(user.getEmail(), "Confirm your E-Mail",
-                    "Hey, please confirm Your Email adress: \n http://localhost:8081/?#/confirmuser \n Token: "
+                    "Hey, please confirm Your Email adress: \n http://localhost:8080/?#/confirmuser \n Token: "
                             + confirmationService.getTokenByEmail(user.getEmail()));
 
             return ResponseEntity.status(HttpStatus.OK).body(user);
