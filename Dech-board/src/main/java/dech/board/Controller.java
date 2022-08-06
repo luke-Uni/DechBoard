@@ -377,8 +377,7 @@ public class Controller {
             // confidentiality of the key pair should be paid attention to here
             // The key can be obtained by going to
             // https://console.cloud.tencent.com/cam/capi website
-            Credential cred = new Credential("AKIDjNq594oOXcYHuNeiX6WkjTyEF0YIo58x",
-                    "d3JL9i8MPFvOacR8fDgz5xc4LPHxTBmC");
+            Credential cred = new Credential("");
             // Instantiate an http option, optional, with no special needs to skip
             HttpProfile httpProfile = new HttpProfile();
             httpProfile.setEndpoint("tmt.tencentcloudapi.com");
